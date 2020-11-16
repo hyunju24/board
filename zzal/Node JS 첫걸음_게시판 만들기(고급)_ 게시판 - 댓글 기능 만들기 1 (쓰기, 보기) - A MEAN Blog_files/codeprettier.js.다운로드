@@ -1,0 +1,300 @@
+/*!
+ * summernote codeprettier plugin
+ * created by : http://a-mean-blog.com
+ */
+(function (factory) {
+    /* global define */
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof module === 'object' && module.exports) {
+        // Node/CommonJS
+        module.exports = factory(require('jquery'));
+    } else {
+        // Browser globals: jQuery
+        factory(window.jQuery);
+    }
+}(function ($) {
+    $.extend($.summernote.plugins, {
+        /**
+         * @param {Object} context - context object has status of editor.
+         */
+        'codeprettier': function (context) {
+            var self = this;
+            var ui = $.summernote.ui;
+
+            var languageOptions = [
+              // { btnName: "bsh", value: "bsh"},
+              // { btnName: "c", value: "c"},
+              // { btnName: "cc", value: "cc"},
+              // { btnName: "cpp", value: "cpp"},
+              // { btnName: "cs", value: "cs"},
+              // { btnName: "csh", value: "csh"},
+              // { btnName: "cyc", value: "cyc"},
+              // { btnName: "cv", value: "cv"},
+              // { btnName: "htm", value: "htm"},
+              { btnName: "html", value: "html"},
+              // { btnName: "java", value: "java"},
+              { btnName: "js", value: "js"},
+              // { btnName: "m", value: "m"},
+              // { btnName: "mxml", value: "mxml"},
+              // { btnName: "perl", value: "perl"},
+              // { btnName: "pl", value: "pl"},
+              // { btnName: "pm", value: "pm"},
+              // { btnName: "py", value: "py"},
+              // { btnName: "php", value: "php"},
+              // { btnName: "rb", value: "rb"},
+              // { btnName: "sh", value: "sh"},
+              // { btnName: "xhtml", value: "xhtml"},
+              // { btnName: "xml", value: "xml"},
+              // { btnName: "xsl", value: "xsl"},
+              { btnName: "css", value: "css"},
+            ];
+            var linenumsOption = false;
+
+            function getDropDownMenu(languageOptions){
+              var menuString="";
+              menuString += '<li><a href="#" data-inline-tag="code">&lt;Code&gt;</a></li>';
+              menuString += '<li><a href="#" data-block-tag="pre">&lt;Pre&gt;</a></li>';
+              languageOptions.forEach(function(option){
+                menuString += '<li><a href="#" data-language="'+option.value+'">'+option.btnName+'</a></li>';
+              });
+              menuString += '<li><a href="#" data-language>[Clear]</a></li>';
+              return menuString;
+            }
+
+            function prettyCodeClickHandler(e){
+              e.stopPropagation();
+              $(this).removeClass("prettyprinted");
+              var contenteditable = $(this).attr("contenteditable") == "true";
+              if(!contenteditable){
+                $(this).attr("contenteditable", true);
+                $(context.layoutInfo.editor).find(".panel-body").attr("contenteditable", false);
+                var text = "";
+                if($(this).hasClass("linenums")){
+                  $(this).find("ol>li").each(function(){
+                    text += $(this).text()+ "\n";
+                  });
+                }
+                else{
+                  text = $(this).text();
+                }
+                text = text.replace(/\n+$/, '').replace(/</g,"&lt;").replace(/>/g,"&gt;");
+                $(this).html(text);
+              }
+            }
+
+            function prettyCodeKeydownHandler(e){
+              var sel, range;
+              if(e.keyCode == 13 && window.getSelection && (sel = window.getSelection()).rangeCount) {
+                range = sel.getRangeAt(0);
+
+                var space = document.createTextNode("\n");
+                e.preventDefault();
+                range = sel.getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(space);
+
+                range.setStart(space, 1);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+              }
+            }
+
+            function nextNode(node) {
+              if (node.hasChildNodes()) {
+                return node.firstChild;
+              } else {
+                while (node && !node.nextSibling) {
+                    node = node.parentNode;
+                }
+                if (!node) {
+                    return null;
+                }
+                return node.nextSibling;
+              }
+            }
+
+            function getRangeSelectedNodes(range) {
+              var node = range.startContainer;
+              var endNode = range.endContainer;
+
+              // Special case for a range that is contained within a single node
+              if (node == endNode) {
+                  return [node];
+              }
+
+              // Iterate nodes until we hit the end container
+              var rangeNodes = [];
+              while (node && node != endNode) {
+                  rangeNodes.push( node = nextNode(node) );
+              }
+
+              // Add partially selected nodes at the start of the range
+              node = range.startContainer;
+              while (node && node != range.commonAncestorContainer) {
+                  rangeNodes.unshift(node);
+                  node = node.parentNode;
+              }
+
+              return rangeNodes;
+            }
+
+            function getTopNode(node){
+              if($(node).parent().hasClass("panel-body")) return node;
+              else if(node)return getTopNode($(node).parent().get(0));
+            }
+
+            function addPrettyprintEvents($dom){
+              $dom.attr("contenteditable", false)
+              .off("click", prettyCodeClickHandler)
+              .on("click", prettyCodeClickHandler)
+              .off("keydown", prettyCodeKeydownHandler)
+              .on("keydown", prettyCodeKeydownHandler);
+            }
+
+            // add button
+            context.memo('button.codeprettier', function () {
+                // create button
+                var button = ui.buttonGroup([
+                  ui.button({
+                    className: 'dropdown-toggle',
+                    contents: '<span>Code</span>',
+                    tooltip: 'codeprettier',
+                    data: {toggle: 'dropdown'}
+                  }),
+                  ui.dropdown({
+                    className: 'drop-default summernote-list',
+                    contents: getDropDownMenu(languageOptions),
+                    callback: function ($dropdown) {
+                      $dropdown.find('a[data-inline-tag]').each(function () {
+                        $(this).click(function (e) {
+                          e.preventDefault();
+                          var tag = $(this).data("inlineTag");
+                          var sel, range;
+                          if (window.getSelection && (sel = window.getSelection()).rangeCount) {
+                            range = sel.getRangeAt(0);
+                            var text= sel.toString();
+                            document.execCommand('delete',false);
+                            var dom = $('<'+tag+'>'+text+'</'+tag+'>')[0];
+                            range.insertNode(dom);
+                          }
+                        });
+                      });
+                      $dropdown.find('a[data-block-tag]').each(function () {
+                        $(this).click(function (e) {
+                          e.preventDefault();
+                          var tag = $(this).data("blockTag");
+                          document.execCommand('FormatBlock', false, tag);
+                        });
+                      });
+                      $dropdown.find('a[data-language]').each(function () {
+                        $(this).click(function (e) {
+                          e.preventDefault();
+                          var sel, range;
+                          if (window.getSelection && (sel = window.getSelection()).rangeCount) {
+                            range = sel.getRangeAt(0);
+
+                            var language = $(this).data("language");
+                            var isPre = sel.baseNode.parentElement && $(sel.baseNode.parentElement).closest("pre").length;
+
+                            if(language && !isPre){ // create new pre block
+
+                              var selectedText = "";
+                              var selectedNodes = getRangeSelectedNodes(range);
+                              var validNodes = [];
+
+                              // console.log("selectedNodes: ", selectedNodes);
+                              $(selectedNodes).each(function(){
+                                var node = getTopNode(this);
+                                if(validNodes.indexOf(node) == -1) validNodes.push(node);
+                              });
+                              // var isFirstNode = (validNodes[0].previousSibling)?false:true;
+                              // var isLastNode = (validNodes[validNodes.length-1].nextSibling)?false:true;
+
+                              $(validNodes).each(function(){
+                                $(this).html($(this).html().replace(/<br\s*\/?>/g, "\n"));
+                                selectedText += (!selectedText?"":"\n")+$(this).text().replace(/</g,"&lt;").replace(/>/g,"&gt;");
+                              });
+                              // console.log("selectedText: ", selectedText);
+
+                              //var dom = $('<pre contenteditable="false" class="prettyprint linenums language-css">'+ selectedText +'</pre>')[0];
+
+                              var dom = $('<pre contenteditable="false" class="prettyprint '+(linenumsOption?'linenums ':'')+'language-'+language+'">'+ selectedText +'</pre>')[0];
+                              addPrettyprintEvents($(dom));
+
+                              $(validNodes[0]).before(dom);
+                              $(validNodes).remove();
+
+                              // if(isFirstNode) $(dom).before($("<p>&nbsp;</p>")[0]);
+                              // if(isLastNode) $(dom).after($("<p>&nbsp;</p>")[0]);
+
+                              $(dom).before($("<p>&nbsp;</p>")[0]);
+                              $(dom).after($("<p>&nbsp;</p>")[0]);
+
+                              PR.prettyPrint();
+                            }
+                            else if(!language && isPre){ // clear pre block
+                              var pre = $(sel.baseNode.parentElement).closest("pre");
+                              var text = pre.text().replace(/\n/g,"</div><div>");
+                              var dom = $("<div>"+text+"</div>");
+                              dom.each(function(){
+                                $(this).html($(this).text().replace(/(\t+)/g,'&nbsp;&nbsp;'));
+                                pre.before(this);
+                              });
+                              pre.remove();
+                            }
+                            else if(language && isPre){ // update language
+                              var pre = $(sel.baseNode.parentElement).closest("pre");
+                              pre.attr('class', 'prettyprint '+(linenumsOption?'linenums ':'')+'language-'+language);
+                              $(context.layoutInfo.editor).find(".panel-body").trigger("click");
+                            }
+                          } // end for if (window.getSelection && (sel = window.getSelection()).rangeCount) {
+                        }); // end for $(this).click(function () {
+                      }); // end for $dropdown.find('a').each(function () {
+                    } // end for callback: function ($dropdown) {
+                  }) // end for ui.dropdown({
+                ]); // end for var button = ui.buttonGroup([
+
+                // create jQuery object from button instance.
+                var $codeprettier = button.render();
+                return $codeprettier;
+            });
+
+            //// This events will be attached when editor is initialized.
+            //this.event = {
+            //    // This will be called after modules are initialized.
+            //    'summernote.init': function (we, e) {
+            //        console.log('summernote initialized', we, e);
+            //    },
+            //    // This will be called when user releases a key on editable.
+            //    'summernote.keyup': function (we, e) {
+            //        console.log('summernote keyup', we, e);
+            //    }
+            //};
+            //
+            //// This method will be called when editor is initialized by $('..').summernote();
+            //// You can create elements for plugin
+            this.initialize = function () {
+
+              $(context.layoutInfo.editor).find(".panel-body").on("click", function(e){
+                var $prettyprints = $(this).find(".prettyprint:not(.prettyprinted)");
+                $prettyprints.attr("contenteditable", false);
+                $(this).attr("contenteditable", true);
+                if($prettyprints.length) PR.prettyPrint();
+                addPrettyprintEvents($(context.layoutInfo.editor).find(".prettyprint")); // for undo action
+              });
+
+              PR.prettyPrint();
+              addPrettyprintEvents($(context.layoutInfo.editor).find(".prettyprint"));
+
+            };
+
+            // This methods will be called when editor is destroyed by $('..').summernote('destroy');
+            // You should remove elements on `initialize`.
+            this.destroy = function () {
+            };
+        }
+    });
+}));

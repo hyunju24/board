@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/head') %>
+  </head>
+  <body>
+    <%- include('partials/nav') %>
+
+    <div class="container mb-3">
+
+      <h2 class="mb-3">Search</h2>
+
+      <table class="board-table table table-sm border-bottom">
+
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col" class="author">User</th>
+            <th scope="col" class="date">Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if(posts == null || posts.length == 0){ %>
+            <tr>
+              <td colspan=2> There is no data to show :( </td>
+            </tr>
+          <% } %>
+          <% posts.forEach(function(post) { %>
+            <tr>
+              <td>
+                <a href="/posts/<%= post._id %><%= getPostQueryString() %>">
+                <!-- 1 --> <div data-search-highlight="title" class="ellipsis"><%= post.title %></div> 
+                </a>
+              </td>
+              <td class="author">
+                <a href="/posts<%= getPostQueryString(false, { searchType:'author!', searchText:post.author.username }) %>">
+                <!-- 2 --> <div data-search-highlight="author" class="ellipsis"><%= post.author ? post.author.username : "" %></div>
+                </a>
+              </td>
+              <td class="date">
+                <span data-date="<%= post.createdAt %>"></span>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+
+        <form action="search" method="get">
+            <div class="form-row">
+                <div class="form-group col-9"> <!-- 2 -->
+                    <label>Search</label>
+                    <div class="input-group">
+                      <select name="searchType" class="custom-select">
+                        <option value="title,body" <%= searchType=='title,body'?'selected':'' %>>Title, Body</option>
+                        <option value="title" <%= searchType=='title'?'selected':'' %>>Title</option>
+                        <option value="body" <%= searchType=='body'?'selected':'' %>>Body</option>
+                        <option value="author" <%= searchType=='author'?'selected':'' %>>User</option>
+                      </select>
+                      <input minLength="3" type="text" name="searchText" value="<%= searchText %>">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-primary" type="submit">search</button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+      
+    </div>
+  </body>
+</html>

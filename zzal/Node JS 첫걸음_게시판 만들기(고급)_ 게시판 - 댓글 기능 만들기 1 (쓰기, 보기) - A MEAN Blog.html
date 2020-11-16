@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<!-- saved from url=(0280)https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%8C%93%EA%B8%80-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%93%B0%EA%B8%B0-%EB%B3%B4%EA%B8%B0 -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Node JS 첫걸음/게시판 만들기(고급): 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog</title><!--<base href="/">--><base href="."><meta name="description" content="node.js/Express 게시판 만들기/자바스크립트로 게시판만들기 - 댓글 기능 만들기 1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="robots" content="INDEX FOLLOW"><link rel="alternate" hreflang="x-default" href="https://www.a-mean-blog.com/ko/blog"><link rel="alternate" hreflang="en-us" href="https://www.a-mean-blog.com/en/blog"><link rel="alternate" hreflang="ko-kr" href="https://www.a-mean-blog.com/ko/blog"><link rel="icon" type="image/x-icon" href="https://www.a-mean-blog.com/favicon.ico"><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/osd.js.다운로드"></script><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/f(2).txt"></script><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/f(3).txt" id="google_shimpl"></script><script async="" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/analytics.js.다운로드"></script><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/detect.js.다운로드"></script><!-- jQuery --><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/jquery-2.2.4.min.js.다운로드"></script><!-- Bootstrap  --><link rel="stylesheet" href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/bootstrap.min.css"><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/bootstrap.min.js.다운로드"></script><!-- font Awesome --><link rel="stylesheet" href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/font-awesome.min.css"><!-- prettify --><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/prettify.js.다운로드"></script><link href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/desert.css" rel="stylesheet"><!-- summernote --><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/summernote.min.js.다운로드"></script><link href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/summernote.css" rel="stylesheet"><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/codeprettier.js.다운로드"></script><!-- Text Game Maker JS --><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/text-game-maker.min.js.다운로드"></script><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/auto-link.js.다운로드"></script><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/tm-destroy.js.다운로드"></script><!-- adsense --><script async="" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/f(4).txt"></script><!-- Google Analytics --><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-90536403-1', 'auto');
+    ga('send', 'pageview');</script><!-- socket.io --><script src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/socket.io.js.다운로드"></script><link href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/styles.e80427d2376d1c38cef0.bundle.css" rel="stylesheet"><style>.navbar-custom[_ngcontent-c0]{background-color:#f8f8f8;border-bottom-color:#e7e7e7;border-top-color:#e7e7e7;border-radius:0}.notificationCount[_ngcontent-c0]{display:inline-block;background-color:#ed5565;padding:0 5px;color:#fff;border-radius:5px}.notificationMark[_ngcontent-c0]{position:absolute;top:-5px;right:-5px;background-color:#ed5565;border-radius:100%;width:20px;height:20px}footer[_ngcontent-c0]{position:absolute;bottom:0;width:100%;display:block;text-align:center;background-color:#f0f0f0;padding:15px 80px}footer[_ngcontent-c0]   span[_ngcontent-c0]{white-space:nowrap}.mobile-menu[_ngcontent-c0]{color:#777;float:right;height:50px;padding:15px 15px 15px 0;line-height:20px;text-decoration:none}.mobile-menu[_ngcontent-c0]:hover{color:#333}</style><style>ul[_ngcontent-c1]{padding-left:0}li[_ngcontent-c1]{list-style-type:none}li.childCategory[_ngcontent-c1]   .categoryContainer[_ngcontent-c1]{padding-left:10px;width:100%}li.childCategory[_ngcontent-c1]   .categoryContainer[_ngcontent-c1]:before{content:"-"}.panel-body[_ngcontent-c1]{padding:0 15px;min-height:100px}.panel-heading[_ngcontent-c1]{padding:7px 15px}.categoryContainer[_ngcontent-c1]{display:block;border-bottom:1px dotted #ccc;height:28px;width:100%;padding:4px 0 3px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.categoryIcon[_ngcontent-c1]{font-size:.7em}.active[_ngcontent-c1]{font-weight:700}.blog-container[_ngcontent-c1]{position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}@media (max-width:767px){.openedCategory[_ngcontent-c1]{display:none}}@media (min-width:768px){.openedCategory-inside[_ngcontent-c1]{display:none}.panel-body[_ngcontent-c1]{display:-webkit-box;display:-ms-flexbox;display:flex}}.nav-wrapper[_ngcontent-c1]{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}.content-wrapper[_ngcontent-c1]{-webkit-box-ordinal-group:3;-ms-flex-order:2;order:2}.ad[_ngcontent-c1]{margin:5px 0;padding:0}.currentGroup[_ngcontent-c1]{font-weight:700}.fixedNav[_ngcontent-c1]{position:fixed;left:0;top:0;padding-top:11px;background:-webkit-gradient(linear,left top,left bottom,color-stop(50%,#fff),to(hsla(0,0%,100%,0)));background:linear-gradient(#fff 50%,hsla(0,0%,100%,0))}.fixedNav[_ngcontent-c1]   .panel[_ngcontent-c1]{position:relative;left:-5px;margin-bottom:0;-webkit-box-shadow:2px 2px 5px rgba(0,0,0,.2);box-shadow:2px 2px 5px rgba(0,0,0,.2);animation-name:float;-webkit-animation-name:float;-moz-animation-name:float;animation-duration:.5s;-webkit-animation-duration:.5s;-moz-animation-duration:.5s;animation-fill-mode:both;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;animation-timing-function:ease-in;-webkit-animation-timing-function:ease-in;-moz-animation-timing-function:ease-in}@-webkit-keyframes float{0%{top:0;left:0;-webkit-box-shadow:0 0 0 rgba(0,0,0,.2);box-shadow:0 0 0 rgba(0,0,0,.2)}to{top:-5px;left:-5px;-webkit-box-shadow:2px 2px 5px rgba(0,0,0,.2);box-shadow:2px 2px 5px rgba(0,0,0,.2)}}@keyframes float{0%{top:0;left:0;-webkit-box-shadow:0 0 0 rgba(0,0,0,.2);box-shadow:0 0 0 rgba(0,0,0,.2)}to{top:-5px;left:-5px;-webkit-box-shadow:2px 2px 5px rgba(0,0,0,.2);box-shadow:2px 2px 5px rgba(0,0,0,.2)}}.show[_ngcontent-c1]{display:block!important}.mobile-ad[_ngcontent-c1]{position:fixed;width:100%;height:50px;left:-1px;bottom:-1px;background-color:#fff}@media (max-width:767px){  footer{bottom:50px!important}  body{padding-bottom:220px}}</style><style>.arrow[_ngcontent-c3]{opacity:0;position:fixed;bottom:30px;border:0 solid #000;width:50px;height:50px;text-align:center;border-radius:100%;padding-top:15px;font-size:18px;line-height:21px;margin:0;cursor:pointer;background-color:#37bc9b;color:wheat;-webkit-box-shadow:0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);box-shadow:0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);animation-duration:1s;-webkit-animation-duration:1s;-moz-animation-duration:1s;animation-fill-mode:both;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both}.fadeOut[_ngcontent-c3]{animation-name:fadeOut;-webkit-animation-name:fadeOut;-moz-animation-name:fadeOut}.fadeIn[_ngcontent-c3]{animation-name:fadeIn;-webkit-animation-name:fadeIn;-moz-animation-name:fadeIn}@-webkit-keyframes fadeOut{0%{opacity:1;z-index:100}to{opacity:0;z-index:-1}}@keyframes fadeOut{0%{opacity:1;z-index:100}to{opacity:0;z-index:-1}}@-webkit-keyframes fadeIn{0%{opacity:0;z-index:100}to{opacity:1;z-index:100}}@keyframes fadeIn{0%{opacity:0;z-index:100}to{opacity:1;z-index:100}}@media (max-width:767px){.arrow[_ngcontent-c3]{bottom:55px}}</style><style>.adminButtons[_ngcontent-c4]{margin:10px 0}h1[_ngcontent-c4]{word-wrap:break-word}.postBody[_ngcontent-c4]{margin:30px 0}.postInfo[_ngcontent-c4]{color:#999;margin-right:20px;margin-bottom:2px}</style><style>.uploadImageBtn[_ngcontent-c4]{position:absolute;bottom:5px;left:20px}.postBodyStyle[_ngcontent-c4]{position:relative;line-height:2;font-size:16px;margin-bottom:50px;word-wrap:break-word}.postBodyStyle[_ngcontent-c4]     pre{word-break:normal;word-wrap:normal}.postBodyStyle[_ngcontent-c4]     .note-editor.note-frame{background:#f5f5f5}.postBodyStyle[_ngcontent-c4]     .note-editor.note-frame .note-editing-area .note-editable{min-height:100px;max-height:500px;margin-bottom:34px;border-bottom:1px solid #ddd}.postBodyStyle[_ngcontent-c4]     .note-editor.note-frame .note-editing-area .note-codable{margin-bottom:34px}.postBodyStyle[_ngcontent-c4]     .note-editor.note-frame .form-group{margin-left:0;margin-right:0}.postBodyStyle[_ngcontent-c4]     .pre, .postBodyStyle[_ngcontent-c4]     h1, .postBodyStyle[_ngcontent-c4]     h2, .postBodyStyle[_ngcontent-c4]     h3, .postBodyStyle[_ngcontent-c4]     h4, .postBodyStyle[_ngcontent-c4]     h5, .postBodyStyle[_ngcontent-c4]     p, .postBodyStyle[_ngcontent-c4]     pre, .postBodyStyle[_ngcontent-c4]     ul{margin-bottom:20px}.postBodyStyle[_ngcontent-c4]     h1, .postBodyStyle[_ngcontent-c4]     h2{margin-top:50px}.postBodyStyle[_ngcontent-c4]     h2{border-bottom:1px solid #000}.postBodyStyle[_ngcontent-c4]     h3{margin-top:30px}.postBodyStyle[_ngcontent-c4]     img{max-width:100%}.postBodyStyle[_ngcontent-c4]     [data-uncopyable]:after{content:attr(data-uncopyable)}</style><style></style><style>.pre[_ngcontent-c8]{font-family:Menlo,Monaco,Consolas,Courier New,monospace;display:block;padding:9.5px;font-size:13px;line-height:1.42857143;color:#333;word-break:break-all;word-wrap:break-word;background-color:#f5f5f5;border:1px solid #ccc;border-radius:4px}.postBody[_ngcontent-c8]{margin-top:50px}.sorceCode[_ngcontent-c8]{margin-bottom:10px}hr[_ngcontent-c8]{border-top:1px solid #000}.sorceCode[_ngcontent-c8]   b[_ngcontent-c8]{font-size:1.1em}.github-url[_ngcontent-c8]{word-break:break-all}.ad[_ngcontent-c8]{text-align:center}.postBody[_ngcontent-c8]     #tm-debug-output pre{border:none;background:none;padding:0}.js-ad[_ngcontent-c8]{position:relative;top:-40px}</style><style>.uploadImageBtn[_ngcontent-c8]{position:absolute;bottom:5px;left:20px}.postBodyStyle[_ngcontent-c8]{position:relative;line-height:2;font-size:16px;margin-bottom:50px;word-wrap:break-word}.postBodyStyle[_ngcontent-c8]     pre{word-break:normal;word-wrap:normal}.postBodyStyle[_ngcontent-c8]     .note-editor.note-frame{background:#f5f5f5}.postBodyStyle[_ngcontent-c8]     .note-editor.note-frame .note-editing-area .note-editable{min-height:100px;max-height:500px;margin-bottom:34px;border-bottom:1px solid #ddd}.postBodyStyle[_ngcontent-c8]     .note-editor.note-frame .note-editing-area .note-codable{margin-bottom:34px}.postBodyStyle[_ngcontent-c8]     .note-editor.note-frame .form-group{margin-left:0;margin-right:0}.postBodyStyle[_ngcontent-c8]     .pre, .postBodyStyle[_ngcontent-c8]     h1, .postBodyStyle[_ngcontent-c8]     h2, .postBodyStyle[_ngcontent-c8]     h3, .postBodyStyle[_ngcontent-c8]     h4, .postBodyStyle[_ngcontent-c8]     h5, .postBodyStyle[_ngcontent-c8]     p, .postBodyStyle[_ngcontent-c8]     pre, .postBodyStyle[_ngcontent-c8]     ul{margin-bottom:20px}.postBodyStyle[_ngcontent-c8]     h1, .postBodyStyle[_ngcontent-c8]     h2{margin-top:50px}.postBodyStyle[_ngcontent-c8]     h2{border-bottom:1px solid #000}.postBodyStyle[_ngcontent-c8]     h3{margin-top:30px}.postBodyStyle[_ngcontent-c8]     img{max-width:100%}.postBodyStyle[_ngcontent-c8]     [data-uncopyable]:after{content:attr(data-uncopyable)}</style><style>.commentDiv[_ngcontent-c9]{margin-bottom:50px}h4[_ngcontent-c9]{line-height:1.5em;border-bottom:1px dotted #ccc}</style><style>ins[_ngcontent-c2]{
+      border: 1px solid #f0f0f0;
+    }</style><style>.childComment[_ngcontent-c11]{margin-top:10px}.childCommentsDiv[_ngcontent-c11]{margin-left:30px}.commentBody[_ngcontent-c11]{white-space:pre-line;word-break:break-all}.deletedProfilePicture[_ngcontent-c11]{width:50px;height:50px;background-color:#ccc}.deletedComment[_ngcontent-c11]{padding-top:19px;padding-bottom:10px;color:#ccc}.right[_ngcontent-c11]{margin:5px 0 10px 55px;padding:0 0 10px 5px;-webkit-transition:background-color 1s;transition:background-color 1s}.right[_ngcontent-c11]:hover{background-color:#eee}.addComment[_ngcontent-c11], .nickname[_ngcontent-c11]{color:#7b7f87;font-size:1.2em;font-weight:700}.nickname[_ngcontent-c11]{margin-right:5px}.createdAt[_ngcontent-c11]{margin-left:5px}.deleted[_ngcontent-c11], .deleted[_ngcontent-c11]   .nickname[_ngcontent-c11]{color:#ccc!important}.action[_ngcontent-c11]{display:inline-block;margin-left:10px}.commentBody[_ngcontent-c11]     .linegap{width:100%;height:10px}</style><style>textarea[_ngcontent-c11]{resize:vertical}.right[_ngcontent-c11]:hover{background-color:inherit}.loginNeeded[_ngcontent-c11]{height:auto}.loginOptions[_ngcontent-c11]{margin:0;padding:0}.loginOptions[_ngcontent-c11]   ul[_ngcontent-c11]{margin:0;padding:0!important}.loginOptions[_ngcontent-c11]   ul[_ngcontent-c11]   li[_ngcontent-c11]{margin:5px;list-style:none outside none;display:inline-block}.loginOptions[_ngcontent-c11]   i[_ngcontent-c11]{width:40px;height:40px;background-color:#909aa0;font-size:22px;text-align:center;padding-top:13px;border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;-o-border-radius:50%}.loginOptions[_ngcontent-c11]   i[_ngcontent-c11], .loginOptions[_ngcontent-c11]   i[_ngcontent-c11]:hover{color:#fff;transition:all .3s ease;-moz-transition:all ease .3s;-webkit-transition:all .3s ease;-o-transition:all ease .3s;-ms-transition:all ease .3s}.loginOptions[_ngcontent-c11]   i[_ngcontent-c11]:hover{text-decoration:none}.loginOptions[_ngcontent-c11]   .fa-facebook[_ngcontent-c11], .loginOptions[_ngcontent-c11]   .fa-facebook[_ngcontent-c11]:hover{background:#4060a5}.loginOptions[_ngcontent-c11]   .fa-twitter[_ngcontent-c11], .loginOptions[_ngcontent-c11]   .fa-twitter[_ngcontent-c11]:hover{background:#00abe3}.loginOptions[_ngcontent-c11]   .fa-google-plus[_ngcontent-c11], .loginOptions[_ngcontent-c11]   .fa-google-plus[_ngcontent-c11]:hover{background:#e64522}.loginOptions[_ngcontent-c11]   .naver[_ngcontent-c11], .loginOptions[_ngcontent-c11]   .naver[_ngcontent-c11]:hover{background-color:#21b500}.commentFormBody[_ngcontent-c11]{min-height:50px;overflow-y:hidden}@media (min-width:767px){.loginOptions[_ngcontent-c11]   .fa-facebook[_ngcontent-c11], .loginOptions[_ngcontent-c11]   .fa-google-plus[_ngcontent-c11], .loginOptions[_ngcontent-c11]   .fa-twitter[_ngcontent-c11], .loginOptions[_ngcontent-c11]   .naver[_ngcontent-c11]{background:#909aa0}}.body[_ngcontent-c11]   .input-group[_ngcontent-c11]   .form-control[_ngcontent-c11]{z-index:0}</style><style>.childComment[_ngcontent-c10]{margin-top:10px}.childCommentsDiv[_ngcontent-c10]{margin-left:30px}.commentBody[_ngcontent-c10]{white-space:pre-line;word-break:break-all}.deletedProfilePicture[_ngcontent-c10]{width:50px;height:50px;background-color:#ccc}.deletedComment[_ngcontent-c10]{padding-top:19px;padding-bottom:10px;color:#ccc}.right[_ngcontent-c10]{margin:5px 0 10px 55px;padding:0 0 10px 5px;-webkit-transition:background-color 1s;transition:background-color 1s}.right[_ngcontent-c10]:hover{background-color:#eee}.addComment[_ngcontent-c10], .nickname[_ngcontent-c10]{color:#7b7f87;font-size:1.2em;font-weight:700}.nickname[_ngcontent-c10]{margin-right:5px}.createdAt[_ngcontent-c10]{margin-left:5px}.deleted[_ngcontent-c10], .deleted[_ngcontent-c10]   .nickname[_ngcontent-c10]{color:#ccc!important}.action[_ngcontent-c10]{display:inline-block;margin-left:10px}.commentBody[_ngcontent-c10]     .linegap{width:100%;height:10px}</style><style>.wrapper[_ngcontent-c12]{position:relative;font-size:25px;color:#fff;text-align:center;line-height:48px}.wrapper[_ngcontent-c12], .wrapper[_ngcontent-c12]   .img[_ngcontent-c12]{height:50px;width:50px;border-radius:5px}.wrapper[_ngcontent-c12]   .img[_ngcontent-c12]{position:absolute;top:0;left:0;background:no-repeat 50%;background-size:cover}</style><link rel="preload" href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/f(5).txt" as="script"><script type="text/javascript" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/f(5).txt"></script><link rel="preload" href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/f(6).txt" as="script"><script type="text/javascript" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/f(6).txt"></script><style>.adminButtons[_ngcontent-c13]{margin:10px 0}h4[_ngcontent-c13]{margin-top:20px}p[_ngcontent-c13]{margin-top:30px}.ad[_ngcontent-c13]{margin-top:20px;text-align:center}</style><style>.adminButtons[_ngcontent-c14]{margin:10px 0}.table[_ngcontent-c14] > tbody[_ngcontent-c14] > tr[_ngcontent-c14] > td[_ngcontent-c14]{line-height:15px}.categoryName[_ngcontent-c14]{width:150px}.date[_ngcontent-c14]{width:100px}.more[_ngcontent-c14]{border-bottom:0;text-align:center}.limit[_ngcontent-c14]{width:50%;min-width:120px;padding:0 5px 2px;border-bottom:1px dotted gray;display:inline-block}.limit[_ngcontent-c14]:hover{text-decoration:none}.show[_ngcontent-c14]{width:100%;margin:0 0 10px 0}table[_ngcontent-c14]   tbody[_ngcontent-c14]   tr[_ngcontent-c14]:last-child   td[_ngcontent-c14]{border-bottom:1px solid #ddd}</style></head><body><script>var socket = io();</script><app-root _nghost-c0="" ng-version="5.2.11"><div _ngcontent-c0="" class="container-fluid">
+  <div _ngcontent-c0="" class="row">
+    <nav _ngcontent-c0="" class="navbar navbar-default navbar-custom">
+      <div _ngcontent-c0="" class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <div _ngcontent-c0="" class="navbar-header">
+          <button _ngcontent-c0="" class="navbar-toggle collapsed" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+            <span _ngcontent-c0="" class="sr-only">Toggle navigation</span>
+            <!---->
+            <span _ngcontent-c0="" class="icon-bar"></span>
+            <span _ngcontent-c0="" class="icon-bar"></span>
+            <span _ngcontent-c0="" class="icon-bar"></span>
+          </button>
+          <a _ngcontent-c0="" class="navbar-brand" href="https://www.a-mean-blog.com/ko">A MEAN Blog</a>
+          <!----><a _ngcontent-c0="" class="mobile-menu" href="https://www.a-mean-blog.com/ko/login?redirectTo=%2Fko%2Fblog%2FNode-JS-%25EC%25B2%25AB%25EA%25B1%25B8%25EC%259D%258C%2F%25EA%25B2%258C%25EC%258B%259C%25ED%258C%2590-%25EB%25A7%258C%25EB%2593%25A4%25EA%25B8%25B0-%25EA%25B3%25A0%25EA%25B8%2589%2F%25EA%25B2%258C%25EC%258B%259C%25ED%258C%2590-%25EB%258C%2593%25EA%25B8%2580-%25EA%25B8%25B0%25EB%258A%25A5-%25EB%25A7%258C%25EB%2593%25A4%25EA%25B8%25B0-1-%25EC%2593%25B0%25EA%25B8%25B0-%25EB%25B3%25B4%25EA%25B8%25B0">
+            <span _ngcontent-c0="" class="glyphicon glyphicon-user"></span> 로그인
+          </a>
+          <!---->
+        </div>
+
+        <div _ngcontent-c0="" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul _ngcontent-c0="" class="nav navbar-nav">
+            <!---->
+            <li _ngcontent-c0="" class="dropdown">
+              <a _ngcontent-c0="" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="https://www.a-mean-blog.com/#" role="button">블로그 <span _ngcontent-c0="" class="caret"></span></a>
+              <ul _ngcontent-c0="" class="dropdown-menu">
+                <!----><!---->
+                  <!----><li _ngcontent-c0="">
+                    <a _ngcontent-c0="" href="https://www.a-mean-blog.com/ko/blog/%EA%B3%B5%EC%A7%80?group=HOME">홈</a>
+                  </li>
+                <!---->
+                  <!----><li _ngcontent-c0="">
+                    <a _ngcontent-c0="" href="https://www.a-mean-blog.com/ko/blog/%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A1%9C-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EC%9E%85%EB%AC%B8?group=JS">프로그래밍 입문</a>
+                  </li>
+                <!---->
+                  <!----><li _ngcontent-c0="">
+                    <a _ngcontent-c0="" href="https://www.a-mean-blog.com/ko/blog?group=MEAN">MEAN Stack 강의</a>
+                  </li>
+                <!---->
+                  <!----><li _ngcontent-c0="">
+                    <a _ngcontent-c0="" href="https://www.a-mean-blog.com/ko/blog/Text-Game-Maker-JS/_/Text-Game-Maker-JS?group=GAME">게임 만들기</a>
+                  </li>
+                
+              </ul>
+            </li>
+            <li _ngcontent-c0="" class="dropdown">
+              <a _ngcontent-c0="" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="https://www.a-mean-blog.com/#" role="button">Games <span _ngcontent-c0="" class="caret"></span></a>
+              <ul _ngcontent-c0="" class="dropdown-menu">
+                <li _ngcontent-c0=""><a _ngcontent-c0="" href="https://www.a-mean-blog.com/ko/games/hello-world">Hello World!</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul _ngcontent-c0="" class="nav navbar-nav navbar-right">
+            <!----><li _ngcontent-c0="">
+              <a _ngcontent-c0="" class="" href="https://www.a-mean-blog.com/en">English</a>
+            </li>
+            <!---->
+            <!----><li _ngcontent-c0="">
+              <a _ngcontent-c0="" href="https://www.a-mean-blog.com/ko/login?redirectTo=%2Fko%2Fblog%2FNode-JS-%25EC%25B2%25AB%25EA%25B1%25B8%25EC%259D%258C%2F%25EA%25B2%258C%25EC%258B%259C%25ED%258C%2590-%25EB%25A7%258C%25EB%2593%25A4%25EA%25B8%25B0-%25EA%25B3%25A0%25EA%25B8%2589%2F%25EA%25B2%258C%25EC%258B%259C%25ED%258C%2590-%25EB%258C%2593%25EA%25B8%2580-%25EA%25B8%25B0%25EB%258A%25A5-%25EB%25A7%258C%25EB%2593%25A4%25EA%25B8%25B0-1-%25EC%2593%25B0%25EA%25B8%25B0-%25EB%25B3%25B4%25EA%25B8%25B0">
+                <span _ngcontent-c0="" class="glyphicon glyphicon-user"></span> 로그인
+              </a>
+            </li>
+            <!---->
+            <!---->
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+    <div _ngcontent-c0="" class="col-sm-12 col-sm-offset-0 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+      <router-outlet _ngcontent-c0="" class="ngViewWrapper" ng-view=""></router-outlet><ng-component _nghost-c1=""><div _ngcontent-c1="" class="blog-container">
+
+  <div _ngcontent-c1="" class="content-wrapper">
+    <router-outlet _ngcontent-c1=""></router-outlet><blog-post _nghost-c4=""><!---->
+
+<!----><previous-next-link _ngcontent-c4="" _nghost-c6=""><!----><div _ngcontent-c6="" class="floats">
+  <a _ngcontent-c6="" class="float-left" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EA%B2%80%EC%83%89-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%EC%9E%91%EC%84%B1%EC%9E%90-%EA%B2%80%EC%83%89-%EA%B2%80%EC%83%89%EC%96%B4-%ED%95%98%EC%9D%BC%EB%9D%BC%EC%9D%B4%ED%8A%B8"> <span _ngcontent-c6="" class="glyphicon glyphicon-chevron-left"></span> 이전 게시물 </a>
+  <a _ngcontent-c6="" class="float-right" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%8C%93%EA%B8%80-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%EC%88%98%EC%A0%95-%EC%82%AD%EC%A0%9C"> 다음 게시물 <span _ngcontent-c6="" class="glyphicon glyphicon-chevron-right"></span> </a>
+</div>
+</previous-next-link>
+
+<!---->
+
+<!----><!---->
+
+  <h1 _ngcontent-c4="">
+    게시판 - 댓글 기능 만들기 1 (쓰기, 보기)
+    <!---->
+  </h1>
+
+  <div _ngcontent-c4="" class="floats">
+    <div _ngcontent-c4="" class="postInfo float-left">
+      <span _ngcontent-c4="" class="name">작성자:</span>
+      <span _ngcontent-c4="" class="value">Ian H</span>
+    </div>
+    <div _ngcontent-c4="" class="postInfo float-left">
+      <span _ngcontent-c4="" class="name">Date:</span>
+      <span _ngcontent-c4="" class="value">2020/01/23</span>
+    </div>
+  </div>
+
+  <blog-post-body _ngcontent-c4="" _nghost-c8=""><div _ngcontent-c8="" class="postBody postBodyStyle">
+  <!----><div _ngcontent-c8="" class="sorceCode">
+    <h2 _ngcontent-c8="" id="소스코드">소스코드</h2>
+    <p _ngcontent-c8="">이 게시물에는 코드작성이 포함되어 있습니다. 소스코드를 받으신 후 진행해 주세요.
+      <a _ngcontent-c8="" href="https://www.a-mean-blog.com/ko/blog/MEAN-Stack/%EA%B0%9C%EB%B0%9C-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95">MEAN Stack/개발 환경 구축</a>에서
+      설명된 프로그램들(git, npm, atom editor)이 있어야 아래의 명령어들을 실행할 수 있습니다.</p>
+    <!----><!---->
+      <p _ngcontent-c8="">이 게시물의 소스코드는 <a _ngcontent-c8="" href="https://www.a-mean-blog.com/redirect/blog?postId=5e26065d440d3700146eeb92">게시판 만들기(고급) / 게시판 - 검색 기능 만들기 2 (작성자 검색, 검색어 하일라이트)</a>에서 이어집니다.</p>
+      <p _ngcontent-c8=""><b _ngcontent-c8="">board.git 을 clone 한 적이 있는 경우</b>:
+        터미널에서 해당 폴더로 이동 후 아래 명령어들을 붙여넣기합니다. 폴더 내 모든 코드가 이 게시물의 코드로 교체됩니다.
+        이를 원치 않으시면 이 방법을 선택하지 마세요.</p>
+      <div _ngcontent-c8="" class="pre">
+        <span _ngcontent-c8="" data-uncopyable="$ "></span>git reset --hard<br _ngcontent-c8="">
+        <span _ngcontent-c8="" data-uncopyable="$ "></span>git pull<br _ngcontent-c8="">
+        <span _ngcontent-c8="" data-uncopyable="$ "></span>git reset --hard 606a3f3<br _ngcontent-c8="">
+        <span _ngcontent-c8="" data-uncopyable="$ "></span>git reset --soft 73949cb<br _ngcontent-c8="">
+        <span _ngcontent-c8="" data-uncopyable="$ "></span>npm install<br _ngcontent-c8="">
+        <span _ngcontent-c8="" data-uncopyable="$ "></span>atom .<br _ngcontent-c8="">
+      </div>
+      <p _ngcontent-c8=""><b _ngcontent-c8="">board.git 을 clone 한 적이 없는 경우</b>: 터미널에서 코드를 다운 받을 폴더로 이동한 후 아래 명령어들을 붙여넣기하여 board.git 을 clone 합니다.<br _ngcontent-c8=""></p>
+    
+    <div _ngcontent-c8="" class="pre">
+      <span _ngcontent-c8="" data-uncopyable="$ "></span>git clone https://github.com/a-mean-blogger/board.git<br _ngcontent-c8="">
+      <span _ngcontent-c8="" data-uncopyable="$ "></span>cd board<br _ngcontent-c8="">
+      <span _ngcontent-c8="" data-uncopyable="$ "></span>git reset --hard 606a3f3<br _ngcontent-c8="">
+      <!----><!---->
+        <span _ngcontent-c8="" data-uncopyable="$ "></span>git reset --soft 73949cb<br _ngcontent-c8="">
+      
+      <span _ngcontent-c8="" data-uncopyable="$ "></span>npm install<br _ngcontent-c8="">
+      <span _ngcontent-c8="" data-uncopyable="$ "></span>atom .<br _ngcontent-c8="">
+    </div>
+    <p _ngcontent-c8="" class="github-url"><b _ngcontent-c8="">- Github에서 소스코드 보기:</b> <a _ngcontent-c8="" target="_blank" href="https://github.com/a-mean-blogger/board/tree/606a3f310eea2d33f930987625147f4d2caa0471">https://github.com/a-mean-blogger/board/tree/606a3f310eea2d33f930987625147f4d2caa0471</a></p>
+    <hr _ngcontent-c8="">
+    <div _ngcontent-c8="" class="ad">
+      <mb4-adsense _ngcontent-c8="" _nghost-c2="">
+    <ins _ngcontent-c2="" class="adsbygoogle" style="width: 300px; height: 250px; display: inline-block;" data-ad-client="ca-pub-8196807384563990" data-ad-slot="8596165507" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:300px;height:250px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="250" frameborder="0" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/ads.html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!8" data-google-query-id="CIPAqf6Ohu0CFUUO4AodJoQDNg" data-load-complete="true"></iframe></ins></ins></ins>
+  </mb4-adsense>
+      <mb4-adsense _ngcontent-c8="" _nghost-c2="">
+    <ins _ngcontent-c2="" class="adsbygoogle" style="width: 300px; height: 250px; display: inline-block;" data-ad-client="ca-pub-8196807384563990" data-ad-slot="8596165507" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><iframe id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0;width:300px;height:250px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="250" frameborder="0" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/ads(1).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!9" data-google-query-id="CJWnr_6Ohu0CFQ2zewodlw4EjQ" data-load-complete="true"></iframe></ins></ins></ins>
+  </mb4-adsense>
+    </div>
+  </div>
+  
+  <div _ngcontent-c8="" class="postHtml"><p>게시판에 '댓글 기능'을 추가해 봅시다. 지금까지의 강의를 통해 주소록정보(contact), 게시물(post), 이용자(user)들의 <a href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EC%A3%BC%EC%86%8C%EB%A1%9D-%EB%A7%8C%EB%93%A4%EA%B8%B0/CRUD%EC%99%80-7-Standard-Actions">CRUD</a> 기능을 만들어 보았는데요, 댓글 기능역시 이들과 같은 CRUD 기능이지만 이들과 좀 다른 부분이 있습니다.</p>
+
+<p>우선 댓글을 보고, 작성하는 공간이 게시물(post)의 show 페이지라는 점. 보통 댓글을 보기 위해 다른 페이지를 이동하지 않고, 게시물을 보면 밑에 댓글들이 자동으로 달려있죠. 댓글을 작성하거나 수정하는 것도 마찬가지 입니다. 이 모든 행동들이 게시물의 show view에서 일어납니다.</p>
+
+<p>두번째로 대댓글 기능. 댓글에 댓글을 다는 것은 모델의 관계를 어떻게 설정해야 할까요?</p>
+
+<p>이러한 점들을 3편의 강의를 통해 알아보겠습니다. 이번강의에서는 댓글(comment) <a href="https://www.a-mean-blog.com/ko/blog/%ED%86%A0%EB%A7%89%EA%B8%80/_/ORM-Object-relational-mapping-%EA%B3%BC-Model">모델</a>을 생성하고, 댓글 작성기능과 댓글 보기 기능을 게시판에 추가합니다.</p>
+
+<h2 id="폴더-구조">폴더 구조</h2>
+
+<p><a href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/comment1_000.png" target="_blank"><img src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/comment1_000.png" data-img-path="images/ie3vu24mepkriwxkhaho/comment1_000.png" alt=""></a></p>
+
+<h2 id="코드-js">코드 - js</h2>
+
+<p>우선 comment의 모델부터 살펴봅시다.</p>
+
+<pre class="prettyprint language-js prettyprinted" style=""><span class="com">// models/Comment.js</span><span class="pln">
+
+</span><span class="kwd">var</span><span class="pln"> mongoose </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'mongoose'</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// schema</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> commentSchema </span><span class="pun">=</span><span class="pln"> mongoose</span><span class="pun">.</span><span class="typ">Schema</span><span class="pun">({</span><span class="pln">
+  post</span><span class="pun">:{</span><span class="pln">type</span><span class="pun">:</span><span class="pln">mongoose</span><span class="pun">.</span><span class="typ">Schema</span><span class="pun">.</span><span class="typ">Types</span><span class="pun">.</span><span class="typ">ObjectId</span><span class="pun">,</span><span class="pln"> ref</span><span class="pun">:</span><span class="str">'post'</span><span class="pun">,</span><span class="pln"> required</span><span class="pun">:</span><span class="kwd">true</span><span class="pun">},</span><span class="pln">   </span><span class="com">// 1</span><span class="pln">
+  author</span><span class="pun">:{</span><span class="pln">type</span><span class="pun">:</span><span class="pln">mongoose</span><span class="pun">.</span><span class="typ">Schema</span><span class="pun">.</span><span class="typ">Types</span><span class="pun">.</span><span class="typ">ObjectId</span><span class="pun">,</span><span class="pln"> ref</span><span class="pun">:</span><span class="str">'user'</span><span class="pun">,</span><span class="pln"> required</span><span class="pun">:</span><span class="kwd">true</span><span class="pun">},</span><span class="pln"> </span><span class="com">// 1</span><span class="pln">
+  parentComment</span><span class="pun">:{</span><span class="pln">type</span><span class="pun">:</span><span class="pln">mongoose</span><span class="pun">.</span><span class="typ">Schema</span><span class="pun">.</span><span class="typ">Types</span><span class="pun">.</span><span class="typ">ObjectId</span><span class="pun">,</span><span class="pln"> ref</span><span class="pun">:</span><span class="str">'comment'</span><span class="pun">},</span><span class="pln"> </span><span class="com">// 2</span><span class="pln">
+  text</span><span class="pun">:{</span><span class="pln">type</span><span class="pun">:</span><span class="typ">String</span><span class="pun">,</span><span class="pln"> required</span><span class="pun">:[</span><span class="kwd">true</span><span class="pun">,</span><span class="str">'text is required!'</span><span class="pun">]},</span><span class="pln">
+  isDeleted</span><span class="pun">:{</span><span class="pln">type</span><span class="pun">:</span><span class="typ">Boolean</span><span class="pun">},</span><span class="pln"> </span><span class="com">// 3</span><span class="pln">
+  createdAt</span><span class="pun">:{</span><span class="pln">type</span><span class="pun">:</span><span class="typ">Date</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">default</span><span class="pun">:</span><span class="typ">Date</span><span class="pun">.</span><span class="pln">now</span><span class="pun">},</span><span class="pln">
+  updatedAt</span><span class="pun">:{</span><span class="pln">type</span><span class="pun">:</span><span class="typ">Date</span><span class="pun">},</span><span class="pln">
+</span><span class="pun">},{</span><span class="pln">
+  toObject</span><span class="pun">:{</span><span class="pln">virtuals</span><span class="pun">:</span><span class="kwd">true</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+commentSchema</span><span class="pun">.</span><span class="pln">virtual</span><span class="pun">(</span><span class="str">'childComments'</span><span class="pun">)</span><span class="pln"> </span><span class="com">//4</span><span class="pln">
+  </span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(){</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">_childComments</span><span class="pun">;</span><span class="pln"> </span><span class="pun">})</span><span class="pln">
+  </span><span class="pun">.</span><span class="kwd">set</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">){</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">_childComments</span><span class="pun">=</span><span class="pln">value</span><span class="pun">;</span><span class="pln"> </span><span class="pun">});</span><span class="pln">
+
+</span><span class="com">// model &amp; export</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> </span><span class="typ">Comment</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> mongoose</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'comment'</span><span class="pun">,</span><span class="pln">commentSchema</span><span class="pun">);</span><span class="pln">
+module</span><span class="pun">.</span><span class="pln">exports </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Comment</span><span class="pun">;</span></pre>
+
+<p>새로운 <a href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EC%A3%BC%EC%86%8C%EB%A1%9D-%EB%A7%8C%EB%93%A4%EA%B8%B0/CRUD%EC%99%80-7-Standard-Actions">CRUD</a>를 추가하려면 우선 <a href="https://www.a-mean-blog.com/ko/blog/%ED%86%A0%EB%A7%89%EA%B8%80/_/ORM-Object-relational-mapping-%EA%B3%BC-Model">모델</a>이 있어야 겠죠. comment 모델부터 살펴봅시다.</p>
+
+<p>1. 댓글에는 작성자가 있고, 댓글이 달리게 되는 게시물있습니다. 각각 <code>user</code>와 <code>post</code>를 연결하여 관계를 형성해 줍니다. 댓글에 이 둘은 반드시 필요하므로 <code>required:true</code>를 달아줍니다.</p>
+
+<p>2. 대댓글은 다른 댓글에 달리게 되므로 댓글과 댓글간의 관계 형성이 필요합니다. 이처럼 자기 자신의 모델을 자신의 항목으로 가지는 것을 <b>self referencing relationship</b>이라고 합니다. 또한 댓글-대댓글은 동일한 모델이 상하관계를 가지게 되는데 이때 상위에 있는 것을 부모(parent)라고 하고, 하위에 있는 것을 자식(child)이라고 부릅니다. 그래서 <code>parentComment</code>라는 항목을 추가하여 대댓글인 경우 어느 댓글에 달린 댓글인지를 표시하였습니다. 대댓글이 아니고 게시물에 바로 달리는 댓글은 부모 댓글이 없으므로 <code>required</code>는 필요하지 않습니다.</p>
+
+<p>3. 게시물-댓글-대댓글-대댓글... 이런식으로 구조가 형성될 텐데, 만약 중간 댓글이 완전히 삭제되어 버리면 하위 댓글들이 부모를 잃고 고아가 됩니다(농담이 아니라 진짜 고아(orphaned)라고 표현합니다). 이를 방지하기 위해 진짜로 DB에서 댓글 데이터를 지우는 것이아니라, <code>isDeleted: true</code> 로 표시해 웹사이트 상에는 표시되지 않게 합니다.</p>
+
+<p>4. DB상에는 대댓글의 부모정보만 저장하지만, 웹사이트에 사용할 때는 부모로부터 자식들을 찾아 내려가는 것이 더 편리하기 때문에 자식 댓글들의 정보를 가지는 항목을 가상(virtual) 항목으로 추가하였습니다.</p>
+
+<p>다음으로 comments <a href="https://www.a-mean-blog.com/ko/blog/%ED%86%A0%EB%A7%89%EA%B8%80/_/Route-Router">route</a>을 살펴봅시다.</p>
+
+<pre class="prettyprint language-js prettyprinted" style=""><span class="com">// routes/comments.js</span><span class="pln">
+
+</span><span class="kwd">var</span><span class="pln"> express  </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'express'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> router </span><span class="pun">=</span><span class="pln"> express</span><span class="pun">.</span><span class="typ">Router</span><span class="pun">();</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> </span><span class="typ">Comment</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'../models/Comment'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> </span><span class="typ">Post</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'../models/Post'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> util </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'../util'</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// create</span><span class="pln">
+router</span><span class="pun">.</span><span class="pln">post</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> util</span><span class="pun">.</span><span class="pln">isLoggedin</span><span class="pun">,</span><span class="pln"> checkPostId</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">){</span><span class="pln"> </span><span class="com">// 1</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> post </span><span class="pun">=</span><span class="pln"> res</span><span class="pun">.</span><span class="pln">locals</span><span class="pun">.</span><span class="pln">post</span><span class="pun">;</span><span class="pln"> </span><span class="com">// 1-1</span><span class="pln">
+
+  req</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">author </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">user</span><span class="pun">.</span><span class="pln">_id</span><span class="pun">;</span><span class="pln"> </span><span class="com">// 2</span><span class="pln">
+  req</span><span class="pun">.</span><span class="pln">body</span><span class="pun">.</span><span class="pln">post </span><span class="pun">=</span><span class="pln"> post</span><span class="pun">.</span><span class="pln">_id</span><span class="pun">;</span><span class="pln">       </span><span class="com">// 2</span><span class="pln">
+
+  </span><span class="typ">Comment</span><span class="pun">.</span><span class="pln">create</span><span class="pun">(</span><span class="pln">req</span><span class="pun">.</span><span class="pln">body</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">err</span><span class="pun">,</span><span class="pln"> comment</span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">err</span><span class="pun">){</span><span class="pln">
+      req</span><span class="pun">.</span><span class="pln">flash</span><span class="pun">(</span><span class="str">'commentForm'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> _id</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">,</span><span class="pln"> form</span><span class="pun">:</span><span class="pln">req</span><span class="pun">.</span><span class="pln">body </span><span class="pun">});</span><span class="pln">                 </span><span class="com">// 3</span><span class="pln">
+      req</span><span class="pun">.</span><span class="pln">flash</span><span class="pun">(</span><span class="str">'commentError'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> _id</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">,</span><span class="pln"> errors</span><span class="pun">:</span><span class="pln">util</span><span class="pun">.</span><span class="pln">parseError</span><span class="pun">(</span><span class="pln">err</span><span class="pun">)</span><span class="pln"> </span><span class="pun">});</span><span class="pln">  </span><span class="com">// 3</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> res</span><span class="pun">.</span><span class="pln">redirect</span><span class="pun">(</span><span class="str">'/posts/'</span><span class="pun">+</span><span class="pln">post</span><span class="pun">.</span><span class="pln">_id</span><span class="pun">+</span><span class="pln">res</span><span class="pun">.</span><span class="pln">locals</span><span class="pun">.</span><span class="pln">getPostQueryString</span><span class="pun">());</span><span class="pln"> </span><span class="com">//4</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+module</span><span class="pun">.</span><span class="pln">exports </span><span class="pun">=</span><span class="pln"> router</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">// private functions</span><span class="pln">
+</span><span class="kwd">function</span><span class="pln"> checkPostId</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">,</span><span class="pln"> next</span><span class="pun">){</span><span class="pln"> </span><span class="com">// 1</span><span class="pln">
+  </span><span class="typ">Post</span><span class="pun">.</span><span class="pln">findOne</span><span class="pun">({</span><span class="pln">_id</span><span class="pun">:</span><span class="pln">req</span><span class="pun">.</span><span class="pln">query</span><span class="pun">.</span><span class="pln">postId</span><span class="pun">},</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">err</span><span class="pun">,</span><span class="pln"> post</span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">err</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> res</span><span class="pun">.</span><span class="pln">json</span><span class="pun">(</span><span class="pln">err</span><span class="pun">);</span><span class="pln">
+
+    res</span><span class="pun">.</span><span class="pln">locals</span><span class="pun">.</span><span class="pln">post </span><span class="pun">=</span><span class="pln"> post</span><span class="pun">;</span><span class="pln"> </span><span class="com">// 1-1</span><span class="pln">
+    next</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span></pre>
+
+<p>1. 댓글을 달때는 post id가 필요한데, 저는 이 post id를 <a href="https://www.a-mean-blog.com/ko/blog/%ED%86%A0%EB%A7%89%EA%B8%80/_/Route-Router">route</a> uri를 통해 받도록 하였습니다. 즉 <code>[POST] /comments?postId=<i>postId</i></code>의 route으로 댓글을 생성합니다. <code>checkPostId</code> 함수는 <code>postId=<i>postId</i></code>가 있는지, 전달받은 post id가 실제 DB에 존재하는지를 확인하는 middle ware입니다.</p>
+
+<p>1-1. DB에서 찾은 post는 <code>res.locals.post</code>에 보관하여 다음 callback함수에서 계속해서 사용할 수 있도록 합니다.</p>
+
+<p>3. comment의 flash들은 post의 flash들과는 다르게 _id 항목를 가지고, form, errors와 같이 하위항목에 실제 form과 errors 데이터를 저장합니다. post와는 달리 하나의 view 페이지에 여러개의 form이 생기기 때문인데요, 해당 flash 데이터들이 올바른 form을 찾을 수 있게 하기 위해서 입니다. 이에 대해서는 다음 강의에서 자세히 살펴봅니다.</p>
+
+<p>4. 댓글이 생성된 후에는 해당 댓글의 게시물의 페이지로 돌아갑니다. post와 관련된 query들을 함께 옮길 수 있도록 <a href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-2">게시판 페이지 기능 만들기2</a>&nbsp;강의에서 만들었던&nbsp;<code>res.locals.getPostQueryString</code>&nbsp;함수도 사용합니다.</p>
+
+<p>새로운 route이 생성되었으니 index.js에 등록해 주어야 합니다. index.js를 살펴봅시다.</p>
+
+<pre class="prettyprint language-js prettyprinted" style=""><span class="com">// index.js </span><span class="pln">
+
+</span><span class="pun">...</span><span class="pln">
+
+</span><span class="com">// Routes</span><span class="pln">
+app</span><span class="pun">.</span><span class="pln">use</span><span class="pun">(</span><span class="str">'/'</span><span class="pun">,</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'./routes/home'</span><span class="pun">));</span><span class="pln">
+app</span><span class="pun">.</span><span class="pln">use</span><span class="pun">(</span><span class="str">'/posts'</span><span class="pun">,</span><span class="pln"> util</span><span class="pun">.</span><span class="pln">getPostQueryString</span><span class="pun">,</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'./routes/posts'</span><span class="pun">));</span><span class="pln">
+app</span><span class="pun">.</span><span class="pln">use</span><span class="pun">(</span><span class="str">'/users'</span><span class="pun">,</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'./routes/users'</span><span class="pun">));</span><span class="pln">
+app</span><span class="pun">.</span><span class="pln">use</span><span class="pun">(</span><span class="str">'/comments'</span><span class="pun">,</span><span class="pln"> util</span><span class="pun">.</span><span class="pln">getPostQueryString</span><span class="pun">,</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'./routes/comments'</span><span class="pun">));</span><span class="pln"> </span><span class="com">// 1</span><span class="pln">
+
+</span><span class="pun">...</span></pre>
+
+<p>1. comment <a href="https://www.a-mean-blog.com/ko/blog/%ED%86%A0%EB%A7%89%EA%B8%80/_/Route-Router">route</a>을 생성하였습니다.</p>
+
+<p>다음은 댓글이 표시될 post의 show route입니다.</p>
+
+<pre class="prettyprint language-js prettyprinted" style=""><span class="com">// routes/posts.js</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> express  </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'express'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> router </span><span class="pun">=</span><span class="pln"> express</span><span class="pun">.</span><span class="typ">Router</span><span class="pun">();</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> </span><span class="typ">Post</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'../models/Post'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> </span><span class="typ">User</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'../models/User'</span><span class="pun">);</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> </span><span class="typ">Comment</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'../models/Comment'</span><span class="pun">);</span><span class="pln"> </span><span class="com">// 1</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> util </span><span class="pun">=</span><span class="pln"> require</span><span class="pun">(</span><span class="str">'../util'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">...</span><span class="pln">
+
+</span><span class="com">// show</span><span class="pln">
+router</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/:id'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">req</span><span class="pun">,</span><span class="pln"> res</span><span class="pun">){</span><span class="pln"> </span><span class="com">// 2</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> commentForm </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">flash</span><span class="pun">(</span><span class="str">'commentForm'</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]</span><span class="pln"> </span><span class="pun">||</span><span class="pln"> </span><span class="pun">{</span><span class="pln">_id</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">,</span><span class="pln"> form</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{}};</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> commentError </span><span class="pun">=</span><span class="pln"> req</span><span class="pun">.</span><span class="pln">flash</span><span class="pun">(</span><span class="str">'commentError'</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]</span><span class="pln"> </span><span class="pun">||</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> _id</span><span class="pun">:</span><span class="kwd">null</span><span class="pun">,</span><span class="pln"> parentComment</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">,</span><span class="pln"> errors</span><span class="pun">:{}};</span><span class="pln">
+
+  </span><span class="typ">Promise</span><span class="pun">.</span><span class="pln">all</span><span class="pun">([</span><span class="pln">
+      </span><span class="typ">Post</span><span class="pun">.</span><span class="pln">findOne</span><span class="pun">({</span><span class="pln">_id</span><span class="pun">:</span><span class="pln">req</span><span class="pun">.</span><span class="pln">params</span><span class="pun">.</span><span class="pln">id</span><span class="pun">}).</span><span class="pln">populate</span><span class="pun">({</span><span class="pln"> path</span><span class="pun">:</span><span class="pln"> </span><span class="str">'author'</span><span class="pun">,</span><span class="pln"> select</span><span class="pun">:</span><span class="pln"> </span><span class="str">'username'</span><span class="pln"> </span><span class="pun">}),</span><span class="pln">
+      </span><span class="typ">Comment</span><span class="pun">.</span><span class="pln">find</span><span class="pun">({</span><span class="pln">post</span><span class="pun">:</span><span class="pln">req</span><span class="pun">.</span><span class="pln">params</span><span class="pun">.</span><span class="pln">id</span><span class="pun">}).</span><span class="pln">sort</span><span class="pun">(</span><span class="str">'createdAt'</span><span class="pun">).</span><span class="pln">populate</span><span class="pun">({</span><span class="pln"> path</span><span class="pun">:</span><span class="pln"> </span><span class="str">'author'</span><span class="pun">,</span><span class="pln"> select</span><span class="pun">:</span><span class="pln"> </span><span class="str">'username'</span><span class="pln"> </span><span class="pun">})</span><span class="pln">
+    </span><span class="pun">])</span><span class="pln">
+    </span><span class="pun">.</span><span class="pln">then</span><span class="pun">(([</span><span class="pln">post</span><span class="pun">,</span><span class="pln"> comments</span><span class="pun">])</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      res</span><span class="pun">.</span><span class="pln">render</span><span class="pun">(</span><span class="str">'posts/show'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> post</span><span class="pun">:</span><span class="pln">post</span><span class="pun">,</span><span class="pln"> comments</span><span class="pun">:</span><span class="pln">comments</span><span class="pun">,</span><span class="pln"> commentForm</span><span class="pun">:</span><span class="pln">commentForm</span><span class="pun">,</span><span class="pln"> commentError</span><span class="pun">:</span><span class="pln">commentError</span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">})</span><span class="pln">
+    </span><span class="pun">.</span><span class="kwd">catch</span><span class="pun">((</span><span class="pln">err</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'err: '</span><span class="pun">,</span><span class="pln"> err</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> res</span><span class="pun">.</span><span class="pln">json</span><span class="pun">(</span><span class="pln">err</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+</span><span class="pun">...</span></pre>
+
+<p>1. Comment 모듈을 가져옵니다.</p><p>2. 댓글은 게시물(post)과 함께 post의 show 페이지에 표시됩니다. 즉 post의 show <a href="https://www.a-mean-blog.com/ko/blog/%ED%86%A0%EB%A7%89%EA%B8%80/_/Route-Router">route</a>은 하나의 게시물과 해당 게시물의 모든 댓글들을 DB에서 모두 읽어온 후 페이지를 만들어야(render)합니다. DB에서 두개 이상의 데이터를 가져와야 하는 경우 <code>Promise.all</code> 함수를 사용할 수 있습니다.</p>
+
+<p><code>Promise.all</code> 함수는 Promise 배열을 인자로 받고, 전달 받은 <b>모든</b> Promise들이 resolve될 때까지 기다렸다가 resolve된 데이터들를 같은 순서의 배열로 만들어 다음 callback으로 전달합니다.</p>
+
+<p>post 하나(<code>findOne</code>)와 해당 post에 관련된 comment들 전부(<code>find</code>)를 찾아서 'posts/show' view를 render합니다.</p>
+
+<p>위에서 설명한 것처럼 <code>Promise.all</code> 함수에 전달되는 배열의 순서(<code>[ Post.findOne(...), Comment.find(...) ]</code>)와 <code>then</code> 함수에서 사용되는 callback함수에 전달되는 배열의 순서(<code>[ post, comments ]</code>)가 일치하도록 합시다.</p>
+
+
+<h2 id="코드-ejs">코드 - ejs</h2>
+
+<pre class="prettyprint language-html prettyprinted" style=""><span class="com">&lt;!-- views/posts/show.ejs --&gt;</span><span class="pln">
+
+      ...
+
+      </span><span class="tag">&lt;h4</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"mt-3"</span><span class="tag">&gt;</span><span class="pln">Comments</span><span class="tag">&lt;/h4&gt;</span><span class="pln"> </span><span class="com">&lt;!-- 1 --&gt;</span><span class="pln">
+
+      </span><span class="pun">&lt;%</span><span class="pln"> </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">comments</span><span class="pun">.</span><span class="pln">length</span><span class="pun">){</span><span class="pln"> %&gt; </span><span class="com">&lt;!-- 1-1 --&gt;</span><span class="pln">
+        </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"mt-3 border-bottom"</span><span class="tag">&gt;</span><span class="pln">
+          </span><span class="pun">&lt;%</span><span class="pln"> comments</span><span class="pun">.</span><span class="pln">forEach</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">comment</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> %&gt; </span><span class="com">&lt;!-- 1-2 --&gt;</span><span class="pln">
+            </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"border-top pt-1 pb-1"</span><span class="tag">&gt;</span><span class="pln">
+              </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"row"</span><span class="tag">&gt;</span><span class="pln">
+                </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"col-3 col-md-2 col-lg-1 pl-4"</span><span class="tag">&gt;</span><span class="pun">&lt;%=</span><span class="pln"> comment</span><span class="pun">.</span><span class="pln">author</span><span class="pun">.</span><span class="pln">username %&gt;</span><span class="tag">&lt;/div&gt;</span><span class="pln"> </span><span class="com">&lt;!-- 1-3 --&gt;</span><span class="pln">
+                </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"col-9 col-md-10 col-lg-11"</span><span class="tag">&gt;</span><span class="pln">
+                  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"comment-show"</span><span class="tag">&gt;</span><span class="pln">
+                    </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"comment-text mb-3"</span><span class="tag">&gt;</span><span class="pun">&lt;%=</span><span class="pln"> comment</span><span class="pun">.</span><span class="pln">text %&gt;</span><span class="tag">&lt;/div&gt;</span><span class="pln"> </span><span class="com">&lt;!-- 1-4 --&gt;</span><span class="pln">
+                    </span><span class="tag">&lt;small</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"d-block"</span><span class="tag">&gt;</span><span class="pln">
+                      (Created: &lt;span data-date-time="</span><span class="pun">&lt;%=</span><span class="pln"> comment</span><span class="pun">.</span><span class="pln">createdAt %&gt;"&gt;</span><span class="tag">&lt;/span&gt;</span><span class="pln">) </span><span class="com">&lt;!-- 1-5 --&gt;</span><span class="pln">
+                    </span><span class="tag">&lt;/small&gt;</span><span class="pln">
+                  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+                </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+              </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+            </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+          </span><span class="pun">&lt;%</span><span class="pln"> </span><span class="pun">})</span><span class="pln"> %&gt;
+        </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+      </span><span class="pun">&lt;%</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> %&gt;
+
+      </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"mt-3"</span><span class="tag">&gt;</span><span class="pln"> </span><span class="com">&lt;!-- 2 --&gt;</span><span class="pln">
+        &lt;form action="/comments?postId=</span><span class="pun">&lt;%=</span><span class="pln"> post</span><span class="pun">.</span><span class="pln">_id %&gt;</span><span class="pun">&lt;%=</span><span class="pln"> getPostQueryString</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">)</span><span class="pln"> %&gt;" method="post"&gt;
+          &lt;fieldset </span><span class="pun">&lt;%=</span><span class="pln"> </span><span class="pun">!</span><span class="pln">isAuthenticated</span><span class="pun">?</span><span class="str">'disabled'</span><span class="pun">:</span><span class="str">''</span><span class="pln"> %&gt;&gt; </span><span class="com">&lt;!-- 2-1 --&gt;</span><span class="pln">
+            </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"row"</span><span class="tag">&gt;</span><span class="pln">
+              </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"col-8"</span><span class="tag">&gt;</span><span class="pln">
+                &lt;textarea name="text" rows="2" class="form-control </span><span class="pun">&lt;%=</span><span class="pln"> </span><span class="pun">(</span><span class="pln">commentError</span><span class="pun">.</span><span class="pln">errors</span><span class="pun">.</span><span class="pln">text</span><span class="pun">)?</span><span class="str">'is-invalid'</span><span class="pun">:</span><span class="str">''</span><span class="pln"> %&gt;"&gt;</span><span class="pun">&lt;%=</span><span class="pln"> commentForm</span><span class="pun">.</span><span class="pln">form</span><span class="pun">.</span><span class="pln">text %&gt;</span><span class="tag">&lt;/textarea&gt;</span><span class="pln">
+              </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+              </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"col-4"</span><span class="tag">&gt;</span><span class="pln">
+                </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"submit"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn btn-primary h-100 mr-2"</span><span class="tag">&gt;</span><span class="pln">Add Comment</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+              </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+            </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+            </span><span class="pun">&lt;%</span><span class="pln"> </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">commentError</span><span class="pun">.</span><span class="pln">errors</span><span class="pun">.</span><span class="pln">text</span><span class="pun">){</span><span class="pln"> %&gt;
+              </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"invalid-feedback d-block"</span><span class="tag">&gt;</span><span class="pun">&lt;%=</span><span class="pln"> commentError</span><span class="pun">.</span><span class="pln">errors</span><span class="pun">.</span><span class="pln">text</span><span class="pun">.</span><span class="pln">message %&gt;</span><span class="tag">&lt;/span&gt;</span><span class="pln"> </span><span class="com">&lt;!-- 2-2 --&gt;</span><span class="pln">
+            </span><span class="pun">&lt;%</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> %&gt;
+          </span><span class="tag">&lt;/fieldset&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/form&gt;</span><span class="pln">
+      </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></pre>
+
+<p>1. DB에서 찾아진 댓글들을 표시하는 부분입니다. 댓글이 존재하면(댓글배열의 길이가 존재하는 경우)(1-1), 각각 댓글을 하나씩 돌면서(1-2) 작성자(1-3), 댓글 텍스트(1-4), 댓글 생성시간(1-5)을 표시합니다.</p>
+
+<p>2. 새로운 댓글을 작성하는 form입니다.</p>
+
+<p>2-1. 비로그인이 상태에서는&nbsp;<code>&lt;fieldset&gt;</code>에 <code>disabled</code> 를 붙여서 댓글을 달 수 없게 하였습니다.</p>
+
+<p>2-2. <code>invalid-feedback</code> class는 <code>form-control</code> class와 <code>is-invalid</code> class가 동시에 있는 element와 형제(sibling)인 경우에만 화면에 표시(<code>display: block</code>)되고, 그렇지 않은 경우에는 화면에서 숨겨지기(<code>display: none</code>) 때문에, 이처럼 <code>form-control</code> class와 떨어진 곳에서 사용하는 경우에는 <code>d-block</code> class를 사용하여 강제로 화면에 표시(<code>display: block</code>)될 수 있도록 합니다.</p>
+
+<h2 id="코드-css">코드 - css</h2>
+
+<pre class="prettyprint language-css prettyprinted" style=""><span class="com">/* public/css/master.css */</span><span class="pln">
+
+</span><span class="pun">...</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">post</span><span class="pun">-</span><span class="pln">body</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">comment</span><span class="pun">-</span><span class="pln">text </span><span class="pun">{</span><span class="pln">
+  white</span><span class="pun">-</span><span class="pln">space</span><span class="pun">:</span><span class="pln"> pre</span><span class="pun">-</span><span class="pln">line</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">...</span></pre>
+
+<p>댓글 텍스트도 게시물 본문(<code>post-body</code>)처럼 줄바꿈이 제대로 표현될 수 있도록 <code>white-space: pre-line;</code>해줍니다.</p>
+
+<h2 id="실행-결과">실행 결과</h2>
+
+<p><a href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/comment1_001.png" target="_blank"><img src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/comment1_001.png" data-img-path="images/m3fzrtkvtcwm6l2kkso8/comment1_001.png" alt=""></a></p>
+
+<p>게시물에 들어가면 아랫쪽에 댓글을 작성할 수 있는 form이 보입니다. 댓글을 하나 작성해 봅시다.</p>
+
+<p><a href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/comment1_002.png" target="_blank"><img src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/comment1_002.png" data-img-path="images/gkca0cgdtgod0pe5ejcd/comment1_002.png" alt=""></a></p>
+
+<p>댓글과 작성시간이 표시됩니다. 이번엔 아무것도 입력하지 않고 'Add Comment' 버튼을 눌러 봅시다.</p>
+
+<p><a href="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/comment1_003.png" target="_blank"><img src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/comment1_003.png" data-img-path="images/wsx6wjjir0ub6so7hrqf/comment1_003.png" alt=""></a></p>
+
+<p>에러가 제대로 표시되는지 확인합시다.</p>
+
+<h2 id="마치며">마치며..</h2>
+
+<p>댓글의 가장 기본적인 기능인 댓글 생성과 보기 기능을 추가해 봤습니다. 이전까지는 하나의 view가 <a href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EC%A3%BC%EC%86%8C%EB%A1%9D-%EB%A7%8C%EB%93%A4%EA%B8%B0/CRUD%EC%99%80-7-Standard-Actions">CRUD</a>의 하나의 기능만을 수행했는데, post의 show 페이지가 댓글을 보여주고 생성하는 기능까지 담당하게 되었습니다.</p>
+
+<p>이 때문에 post의 show 페이지의 view 코드가 좀 더 복잡해 졌는데요, 댓글에 관련해서 기능들이 더 추가될 예정이므로 계속 더 복잡해질 예정입니다.</p></div>
+  <div _ngcontent-c8="" class="ad">
+    <mb4-adsense _ngcontent-c8="" _nghost-c2="">
+    <ins _ngcontent-c2="" class="adsbygoogle" style="width: 300px; height: 250px; display: inline-block;" data-ad-client="ca-pub-8196807384563990" data-ad-slot="3260078340" data-adsbygoogle-status="done"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><ins id="aswift_3_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><iframe id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;border:0;width:300px;height:250px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="250" frameborder="0" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/ads(2).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!a" data-google-query-id="CN7BooGPhu0CFUyFewodYJcJww" data-load-complete="true"></iframe></ins></ins></ins>
+  </mb4-adsense>
+    <mb4-adsense _ngcontent-c8="" _nghost-c2="">
+    <ins _ngcontent-c2="" class="adsbygoogle" style="width: 300px; height: 250px; display: inline-block;" data-ad-client="ca-pub-8196807384563990" data-ad-slot="3260078340" data-adsbygoogle-status="done"><ins id="aswift_4_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><ins id="aswift_4_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><iframe id="aswift_4" name="aswift_4" style="left:0;position:absolute;top:0;border:0;width:300px;height:250px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="300" height="250" frameborder="0" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/ads(3).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!b" data-google-query-id="COrKpoGPhu0CFYK73godW6kB3g" data-load-complete="true"></iframe></ins></ins></ins>
+  </mb4-adsense>
+    
+  </div>
+</div>
+</blog-post-body>
+
+  <!----><previous-next-link _ngcontent-c4="" _nghost-c6=""><!----><div _ngcontent-c6="" class="floats">
+  <a _ngcontent-c6="" class="float-left" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EA%B2%80%EC%83%89-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%EC%9E%91%EC%84%B1%EC%9E%90-%EA%B2%80%EC%83%89-%EA%B2%80%EC%83%89%EC%96%B4-%ED%95%98%EC%9D%BC%EB%9D%BC%EC%9D%B4%ED%8A%B8"> <span _ngcontent-c6="" class="glyphicon glyphicon-chevron-left"></span> 이전 게시물 </a>
+  <a _ngcontent-c6="" class="float-right" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%8C%93%EA%B8%80-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-2-%EC%88%98%EC%A0%95-%EC%82%AD%EC%A0%9C"> 다음 게시물 <span _ngcontent-c6="" class="glyphicon glyphicon-chevron-right"></span> </a>
+</div>
+</previous-next-link>
+
+  <comments _ngcontent-c4="" _nghost-c9=""><div _ngcontent-c9="" class="commentDiv" id="blog-comments">
+  <h4 _ngcontent-c9="">댓글</h4>
+  <!----><div _ngcontent-c9="">
+    <comments-comment _ngcontent-c9="" _nghost-c10=""><!----><div _ngcontent-c10="" class="postComment" id="c5ea800ee76a71e00144c8082">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(34, 49, 147);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/ifxbuzypq1junpcmp2dw/2075929280+594021095.jpg&quot;);"></div>
+      J
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Jake Lyu</span>
+          <span _ngcontent-c10="" class="createdAt">2020.04.28</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!---->
+          <div _ngcontent-c10="" class="commentBody">var&nbsp;Comment&nbsp;=&nbsp;require("../models/Comment");<div class="linegap"></div>clone하지&nbsp;않고&nbsp;타이핑으로&nbsp;따라가고&nbsp;있는데,&nbsp;module을&nbsp;변수에&nbsp;담는&nbsp;걸&nbsp;내용에&nbsp;추가하지&nbsp;않으신&nbsp;것&nbsp;같습니다.&nbsp;Comment&nbsp;is&nbsp;not&nbsp;defined&nbsp;가&nbsp;나오더라구요.&nbsp;&nbsp;<div class="linegap"></div></div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!----><div _ngcontent-c10="">
+      <!----><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5ea856ac76a71e00144c8085">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.04.29</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@Jake Lyu, </div>
+          <div _ngcontent-c10="" class="commentBody">와&nbsp;타이핑만으로&nbsp;하신다니&nbsp;대단해요.&nbsp;알려주신&nbsp;부분&nbsp;수정하였습니다.&nbsp;도움을&nbsp;주셔서&nbsp;감사합니다^^</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment>
+
+      <!---->
+
+    </div>
+
+  </div>
+
+</div>
+</comments-comment>
+  </div><div _ngcontent-c9="">
+    <comments-comment _ngcontent-c9="" _nghost-c10=""><!----><div _ngcontent-c10="" class="postComment" id="c5eeece3a80b9a70014bd1de3">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(39, 4, 65);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;https://lh3.googleusercontent.com/a-/AOh14GjX40lKMNw1e3rgEp_nuk5u2sWggFZW4w_FKBIJ&quot;);"></div>
+      M
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Moonkyu Kim</span>
+          <span _ngcontent-c10="" class="createdAt">2020.06.21</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!---->
+          <div _ngcontent-c10="" class="commentBody">플젝&nbsp;만드는데에&nbsp;큰&nbsp;방향을&nbsp;제시해주고&nbsp;계셔요&nbsp;!&nbsp;핵심적인&nbsp;흐름들은&nbsp;이&nbsp;강의를&nbsp;바탕으로&nbsp;작성하고&nbsp;있습니다&nbsp;ㅎㅎ
+복받으실거에요&nbsp;!</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!----><div _ngcontent-c10="">
+      <!----><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5ef267386d7c4f00147add32">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.06.24</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@Moonkyu Kim, </div>
+          <div _ngcontent-c10="" class="commentBody">감사합니다^^&nbsp;뭔가&nbsp;보람차네요&nbsp;ㅋ</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment>
+
+      <!---->
+
+    </div>
+
+  </div>
+
+</div>
+</comments-comment>
+  </div><div _ngcontent-c9="">
+    <comments-comment _ngcontent-c9="" _nghost-c10=""><!----><div _ngcontent-c10="" class="postComment" id="c5ef990286230c30014dd6a31">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(18, 83, 49);">
+      <!---->
+      특
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">특대갈비</span>
+          <span _ngcontent-c10="" class="createdAt">2020.06.29</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!---->
+          <div _ngcontent-c10="" class="commentBody">댓글기능이&nbsp;더&nbsp;급해서&nbsp;댓글기능을&nbsp;제&nbsp;프로젝트에&nbsp;구현하려고&nbsp;노력했는데&nbsp;view파일들에서&nbsp;에러가&nbsp;납니다.&nbsp;페이지&nbsp;기능&nbsp;만들기&nbsp;2를&nbsp;안해서&nbsp;그러한가요?&nbsp;view&nbsp;(ejs)&nbsp;파일들에서&nbsp;getPostQueryString을&nbsp;찾을수&nbsp;없다고&nbsp;나오는데&nbsp;ejs&nbsp;파일들에서&nbsp;불러오는게&nbsp;왜&nbsp;안되는지&nbsp;알려주실수&nbsp;있나요&nbsp;?&nbsp;util.js&nbsp;나&nbsp;post.js&nbsp;등에&nbsp;파일에는&nbsp;작동을&nbsp;할수&nbsp;있도록&nbsp;
+"util.getPostQueryString&nbsp;=&nbsp;function(req,&nbsp;res,&nbsp;next){
+&nbsp;&nbsp;res.locals.getPostQueryString&nbsp;=&nbsp;function(isAppended=false,&nbsp;overwrites={}){"
+나&nbsp;
+"var&nbsp;Post&nbsp;=&nbsp;require('../models/Post');
+var&nbsp;util&nbsp;=&nbsp;require('../util');
+var&nbsp;Comment&nbsp;=&nbsp;require('../models/Comment');"
+이렇게했습니다&nbsp;
+너무&nbsp;감사합니다.&nbsp;</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!----><div _ngcontent-c10="">
+      <!----><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5ef990806230c30014dd6a33">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(18, 83, 49);">
+      <!---->
+      특
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">특대갈비</span>
+          <span _ngcontent-c10="" class="createdAt">2020.06.29</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!---->
+          <div _ngcontent-c10="" class="commentBody">&nbsp;78|&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;79|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&nbsp;class="mt-3"&gt;&nbsp;&lt;!--&nbsp;2&nbsp;--&gt;
+&nbsp;&gt;&gt;&nbsp;80|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;form&nbsp;action="/comments?postId=&lt;%=&nbsp;post._id&nbsp;%&gt;&lt;%=&nbsp;getPostQueryString(true)&nbsp;%&gt;"&nbsp;method="post"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;81|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;fieldset&nbsp;&lt;%=&nbsp;!isAuthenticated?'disabled':''&nbsp;%&gt;&gt;&nbsp;&lt;!--&nbsp;2-1&nbsp;--&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;82|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&nbsp;class="row"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;83|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&nbsp;class="col-8"&gt;<div class="linegap"></div>getPostQueryString&nbsp;is&nbsp;not&nbsp;defined
+이런식으로&nbsp;나오더라고요</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5efa22f7d2cf880014a236e9">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.06.30</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@특대갈비, </div>
+          <div _ngcontent-c10="" class="commentBody">제&nbsp;강의의&nbsp;index.js파일처럼<div class="linegap"></div>app.use('/comments',&nbsp;util.getPostQueryString,&nbsp;require('./routes/comments'));<div class="linegap"></div>이렇게&nbsp;util.getPostQueryString을&nbsp;해당&nbsp;route의&nbsp;middle-ware로&nbsp;사용해&nbsp;주셔야&nbsp;해당코드를&nbsp;사용할&nbsp;수&nbsp;있습니다^^</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5efc1715c91c38001471ad0d">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(18, 83, 49);">
+      <!---->
+      특
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">특대갈비</span>
+          <span _ngcontent-c10="" class="createdAt">2020.07.01</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@Ian H, </div>
+          <div _ngcontent-c10="" class="commentBody">감사합니다.&nbsp;app.use('/comments',&nbsp;util.getPostQueryString,&nbsp;require('./routes/comments'));&nbsp;&nbsp;이렇게&nbsp;했었는데&nbsp;자꾸&nbsp;error&nbsp;가나서&nbsp;
+app.use('/',&nbsp;util.getPostQueryString,&nbsp;require('./routes/home'))
+전체로&nbsp;바꿔버렸더니&nbsp;되더라구요.&nbsp;
+뭔가&nbsp;저에게&nbsp;보드&nbsp;종류가&nbsp;더&nbsp;많아서&nbsp;그런것&nbsp;같습니다.&nbsp;감사합니다!</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5efcba53cf753e00146c95f0">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.07.02</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@특대갈비, </div>
+          <div _ngcontent-c10="" class="commentBody">아마&nbsp;'./routes/comments'&nbsp;외의&nbsp;route에서&nbsp;사용되는&nbsp;view&nbsp;파일에서&nbsp;getPostQueryString호출이&nbsp;있기&nbsp;때문일거예요.&nbsp;getPostQueryString이&nbsp;호출되는&nbsp;모든&nbsp;route에&nbsp;util.getPostQueryString를&nbsp;넣어주어야&nbsp;합니다.</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5efd8566cf753e00146c95f2">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(18, 83, 49);">
+      <!---->
+      특
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">특대갈비</span>
+          <span _ngcontent-c10="" class="createdAt">2020.07.02</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@Ian H, </div>
+          <div _ngcontent-c10="" class="commentBody">감사합니다&nbsp;잘&nbsp;해결&nbsp;했습니다.&nbsp;
+제&nbsp;프로젝트가&nbsp;보드를&nbsp;여러게&nbsp;만드는&nbsp;거&nbsp;여서&nbsp;여기서&nbsp;부터&nbsp;많은&nbsp;문제점이&nbsp;시작&nbsp;되더라고요.&nbsp;
+혹시&nbsp;괜찮으시다면&nbsp;몇개&nbsp;질문을&nbsp;하고싶습니다.&nbsp;
+1.&nbsp;router.get('/',&nbsp;async&nbsp;function(req,&nbsp;res){&nbsp;&nbsp;여기서&nbsp;'/'&nbsp;같이&nbsp;url&nbsp;&nbsp;주소를&nbsp;적는&nbsp;부분에서&nbsp;혹시&nbsp;디비에서&nbsp;가저온&nbsp;데이터르&nbsp;쓸수가&nbsp;있나요?&nbsp;예를들면&nbsp;
+router.&nbsp;get('/'+&nbsp;board...&nbsp;&nbsp;
+이런식으로&nbsp;
+2.&nbsp;만약&nbsp;다중&nbsp;게시판을&nbsp;개설한다고&nbsp;하였을때&nbsp;
+저는&nbsp;post&nbsp;를&nbsp;(model&nbsp;view&nbsp;route)&nbsp;를&nbsp;만들고&nbsp;이안에서&nbsp;디비&nbsp;모델에&nbsp;boardType&nbsp;과같이&nbsp;넣어주어서&nbsp;하고싶은데&nbsp;이방법이&nbsp;맞는건가요...?
+죄송합니다&nbsp;강의와&nbsp;전혀&nbsp;관련없는&nbsp;질문을&nbsp;하게&nbsp;되어서</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5efe005ccf753e00146c95f4">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.07.03</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@특대갈비, </div>
+          <div _ngcontent-c10="" class="commentBody">아닙니다&nbsp;민스택에&nbsp;관한&nbsp;질문은&nbsp;언제든지&nbsp;환영입니다^^
+route에&nbsp;db에&nbsp;있는&nbsp;정보를&nbsp;입력해서&nbsp;각각&nbsp;다른&nbsp;board를&nbsp;보여주고&nbsp;싶으신거죠?<div class="linegap"></div>router.&nbsp;get('/:boardName',&nbsp;...<div class="linegap"></div>이런식으로&nbsp;&nbsp;:를&nbsp;이용해서&nbsp;dynamic한&nbsp;값을&nbsp;route으로부터&nbsp;받을&nbsp;수&nbsp;있고,&nbsp;이&nbsp;값을&nbsp;이용해서&nbsp;DB를&nbsp;검색한&nbsp;후&nbsp;값에&nbsp;따라&nbsp;할일을&nbsp;정해주시면&nbsp;됩니다.<div class="linegap"></div><a href="https://a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/Hello-World/EJS%EB%A1%9C-Dynamic-Website-%EB%A7%8C%EB%93%A4%EA%B8%B0" target="_blank">https://a-mean-blog.com/ko/blog/Node-JS-첫걸음/Hello-World/EJS로-Dynamic-Website-만들기</a>&nbsp;강의&nbsp;에서&nbsp;:nameParam&nbsp;과&nbsp;req.params.nameParam를&nbsp;사용해서&nbsp;dynamic한&nbsp;route을&nbsp;만드는&nbsp;부분을&nbsp;봐주세요.<div class="linegap"></div></div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment>
+
+      <!---->
+
+    </div>
+
+  </div>
+
+</div>
+</comments-comment>
+  </div><div _ngcontent-c9="">
+    <comments-comment _ngcontent-c9="" _nghost-c10=""><!----><div _ngcontent-c10="" class="postComment" id="c5f276f50771b0a00147433bc">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(66, 37, 73);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;https://lh4.googleusercontent.com/-EJiT2um0xvk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmGriSlIV4EV21OHb0F-IR2_x7rew/photo.jpg&quot;);"></div>
+      이
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">이상민</span>
+          <span _ngcontent-c10="" class="createdAt">2020.08.03</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!---->
+          <div _ngcontent-c10="" class="commentBody">h님&nbsp;궁금한게&nbsp;있습니다.&nbsp;게시글&nbsp;내에&nbsp;댓글을&nbsp;추가하게&nbsp;되면&nbsp;나중에&nbsp;게시글을&nbsp;삭제했을&nbsp;때&nbsp;해당&nbsp;게시글과&nbsp;관련된&nbsp;댓글들이&nbsp;삭제되지&nbsp;않는&nbsp;점을&nbsp;발견했습니다.&nbsp;그러면&nbsp;이러한&nbsp;경우에는&nbsp;게시글을&nbsp;삭제하기&nbsp;전에&nbsp;삭제하고자&nbsp;하는&nbsp;게시글의&nbsp;댓글을&nbsp;먼저&nbsp;삭제하고&nbsp;나서&nbsp;게시글을&nbsp;삭제하는&nbsp;것이&nbsp;맞는&nbsp;거겠죠??</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!----><div _ngcontent-c10="">
+      <!----><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5f277dc8771b0a00147433be">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(66, 37, 73);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;https://lh4.googleusercontent.com/-EJiT2um0xvk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmGriSlIV4EV21OHb0F-IR2_x7rew/photo.jpg&quot;);"></div>
+      이
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">이상민</span>
+          <span _ngcontent-c10="" class="createdAt">2020.08.03</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!---->
+          <div _ngcontent-c10="" class="commentBody">코드&nbsp;한&nbsp;줄&nbsp;추가&nbsp;했더니&nbsp;관련된&nbsp;데이터도&nbsp;잘&nbsp;삭제&nbsp;되네요</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5f284a478666e3001427595a">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.08.04</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@이상민, </div>
+          <div _ngcontent-c10="" class="commentBody">사실&nbsp;실무에서는&nbsp;게시글을&nbsp;삭제했다고&nbsp;DB에서&nbsp;해당&nbsp;데이터를&nbsp;지우는&nbsp;일은&nbsp;거의&nbsp;없습니다.&nbsp;대부분&nbsp;사용자들이&nbsp;볼&nbsp;수&nbsp;없게&nbsp;처리하고&nbsp;DB에는&nbsp;정보가&nbsp;남아있죠.&nbsp;관련된&nbsp;데이터들도&nbsp;마찬가지로&nbsp;DB상에서&nbsp;지우지&nbsp;않죠.&nbsp;정답이&nbsp;있는&nbsp;것은&nbsp;아니고&nbsp;상민님께서&nbsp;수정하신&nbsp;내용처럼,&nbsp;게시물을&nbsp;지울&nbsp;때&nbsp;댓글을&nbsp;다&nbsp;찾아서&nbsp;지울&nbsp;수도&nbsp;있고,&nbsp;댓글이&nbsp;달려있으면&nbsp;게시글을&nbsp;못지우게&nbsp;강제할&nbsp;수도&nbsp;있습니다.&nbsp;제&nbsp;강의에서는&nbsp;글만&nbsp;지워지고&nbsp;댓글은&nbsp;지워지지&nbsp;않는데,&nbsp;이건&nbsp;잘못된것이&nbsp;맞죠^^;;&nbsp;하지만&nbsp;제&nbsp;코드는&nbsp;'강의용'&nbsp;코드로&nbsp;복잡한&nbsp;댓글&nbsp;강의를&nbsp;조금이라도&nbsp;간단히&nbsp;하기&nbsp;위해&nbsp;해당부분을&nbsp;일부러&nbsp;누락하였습니다.</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5f28e0f78666e30014275967">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(66, 37, 73);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;https://lh4.googleusercontent.com/-EJiT2um0xvk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmGriSlIV4EV21OHb0F-IR2_x7rew/photo.jpg&quot;);"></div>
+      이
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">이상민</span>
+          <span _ngcontent-c10="" class="createdAt">2020.08.04</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@Ian H, </div>
+          <div _ngcontent-c10="" class="commentBody">그렇군요&nbsp;답변&nbsp;감사합니다.
+그러면&nbsp;h님이&nbsp;말씀하신대로&nbsp;게시글을&nbsp;삭제할&nbsp;때&nbsp;댓글을&nbsp;db상에서&nbsp;지우지&nbsp;않는&nbsp;이유는&nbsp;추후에&nbsp;그&nbsp;데이터를&nbsp;이용해서&nbsp;뭐..&nbsp;사이버범죄&nbsp;예방에&nbsp;도움이&nbsp;되도록&nbsp;사용한다던지??&nbsp;이런식으로의&nbsp;사용을&nbsp;위해서인가요??&nbsp;아니면&nbsp;또&nbsp;다른&nbsp;이유가&nbsp;있다던지
+진짜로&nbsp;아무&nbsp;이유없이&nbsp;단지&nbsp;데이터&nbsp;수집을&nbsp;위한&nbsp;하나의&nbsp;대책?이라고&nbsp;할까요??
+아직&nbsp;실무를&nbsp;한&nbsp;번도&nbsp;겪어보지를&nbsp;못해서&nbsp;잘&nbsp;모르겠네요.&nbsp;한&nbsp;번&nbsp;궁금해서&nbsp;물어봅니다.</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5f299d230a6fd10014499dbc">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.08.05</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@이상민, </div>
+          <div _ngcontent-c10="" class="commentBody">그렇죠.&nbsp;혹시나&nbsp;분쟁이&nbsp;있는&nbsp;경우를&nbsp;위해,&nbsp;통계를&nbsp;낸다든지,&nbsp;혹은&nbsp;빅데이터에&nbsp;활용하기&nbsp;위해서&nbsp;수집하기도&nbsp;하죠.&nbsp;DB가&nbsp;차고&nbsp;시간이&nbsp;흐르면&nbsp;일정기간&nbsp;이전의&nbsp;데이터는&nbsp;따로&nbsp;삭제하기도&nbsp;합니다.</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5f2ca9960fe21f00142ca5bd">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(66, 37, 73);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;https://lh4.googleusercontent.com/-EJiT2um0xvk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmGriSlIV4EV21OHb0F-IR2_x7rew/photo.jpg&quot;);"></div>
+      이
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">이상민</span>
+          <span _ngcontent-c10="" class="createdAt">2020.08.07</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@Ian H, </div>
+          <div _ngcontent-c10="" class="commentBody">감사합니다.</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5f316a53367bd000141132f2">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.08.11</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@이상민, </div>
+          <div _ngcontent-c10="" class="commentBody">👍</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment>
+
+      <!---->
+
+    </div>
+
+  </div>
+
+</div>
+</comments-comment>
+  </div><div _ngcontent-c9="">
+    <comments-comment _ngcontent-c9="" _nghost-c10=""><!----><div _ngcontent-c10="" class="postComment" id="c5f89483a36da6b0014980b9e">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(113, 144, 7);">
+      <!---->
+      가
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">가정교사</span>
+          <span _ngcontent-c10="" class="createdAt">2020.10.16</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!---->
+          <div _ngcontent-c10="" class="commentBody">//&nbsp;routes/comment.js&nbsp;&nbsp;&nbsp;&nbsp;=&gt;&nbsp;&nbsp;&nbsp;comments.js&nbsp;라고&nbsp;바꾸셔야&nbsp;할거&nbsp;같아요&nbsp;별거&nbsp;아닌거&nbsp;같지만...<div class="linegap"></div>따라가면서&nbsp;타이핑&nbsp;하다가&nbsp;디렉토리&nbsp;구조&nbsp;안보고&nbsp;주석만&nbsp;보고&nbsp;파일&nbsp;만들었는데&nbsp;index.js에서&nbsp;route&nbsp;등록&nbsp;할때&nbsp;깨달았네요</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!----><div _ngcontent-c10="">
+      <!----><comments-comment _ngcontent-c10="" _nghost-c10=""><!----><div _ngcontent-c10="" class="childComment" id="c5f89496136da6b0014980ba1">
+  <div _ngcontent-c10="" class="floats">
+    <div _ngcontent-c10="" class="float-left">
+      <profile-picture _ngcontent-c10="" _nghost-c12="">
+    <div _ngcontent-c12="" class="wrapper" style="background-color: rgb(9, 34, 67);">
+      <!----><div _ngcontent-c12="" class="img" style="background-image: url(&quot;images/g4sf8t9rg2bpxyiwfgms/favicon.png&quot;);"></div>
+      I
+    </div>
+  </profile-picture>
+    </div>
+    <div _ngcontent-c10="" class="right">
+      <!----><div _ngcontent-c10="" class="comment">
+        <div _ngcontent-c10="" class="top">
+          <span _ngcontent-c10="" class="nickname">Ian H</span>
+          <span _ngcontent-c10="" class="createdAt">2020.10.16</span>
+          <!---->
+        </div>
+        <div _ngcontent-c10="">
+          <!----><div _ngcontent-c10="" class="nickname">@가정교사, </div>
+          <div _ngcontent-c10="" class="commentBody">수정하였습니다.&nbsp;제보주셔서&nbsp;감사합니다👍</div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+  <div _ngcontent-c10="" class="childCommentsDiv">
+    <!---->
+
+  </div>
+
+</div>
+</comments-comment>
+
+      <!---->
+
+    </div>
+
+  </div>
+
+</div>
+</comments-comment>
+  </div>
+
+  <comment-form _ngcontent-c9="" _nghost-c11=""><div _ngcontent-c11="" class="floats postComment">
+  <div _ngcontent-c11="" class="float-left">
+    <!---->
+    <!----><img _ngcontent-c11="" class="profilePicture" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/face.png">
+  </div>
+  <div _ngcontent-c11="" class="right">
+
+      <!---->
+
+      <!----><div _ngcontent-c11="">
+        <div _ngcontent-c11="" class="top addComment">
+          댓글쓰기
+        </div>
+        <div _ngcontent-c11="" class="body">
+          <div _ngcontent-c11="" class="form-control loginNeeded">
+            <!----><p _ngcontent-c11="">이 글에 댓글을 다시려면 SNS 계정으로 로그인하세요. <a _ngcontent-c11="" href="https://www.a-mean-blog.com/ko/login?redirectTo=%2Fko%2Fblog%2FNode-JS-%25EC%25B2%25AB%25EA%25B1%25B8%25EC%259D%258C%2F%25EA%25B2%258C%25EC%258B%259C%25ED%258C%2590-%25EB%25A7%258C%25EB%2593%25A4%25EA%25B8%25B0-%25EA%25B3%25A0%25EA%25B8%2589%2F%25EA%25B2%258C%25EC%258B%259C%25ED%258C%2590-%25EB%258C%2593%25EA%25B8%2580-%25EA%25B8%25B0%25EB%258A%25A5-%25EB%25A7%258C%25EB%2593%25A4%25EA%25B8%25B0-1-%25EC%2593%25B0%25EA%25B8%25B0-%25EB%25B3%25B4%25EA%25B8%25B0">자세히 알아보기</a></p>
+            <!---->
+            <div _ngcontent-c11="" class="loginOptions social">
+              <ul _ngcontent-c11="">
+                <li _ngcontent-c11=""><a _ngcontent-c11="" target="_self" href="https://www.a-mean-blog.com/login/facebook?redirectTo=/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%8C%93%EA%B8%80-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%93%B0%EA%B8%B0-%EB%B3%B4%EA%B8%B0"><i _ngcontent-c11="" class="fa fa-lg fa-facebook"></i></a></li>
+                <li _ngcontent-c11=""><a _ngcontent-c11="" target="_self" href="https://www.a-mean-blog.com/login/google?redirectTo=/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%8C%93%EA%B8%80-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%93%B0%EA%B8%B0-%EB%B3%B4%EA%B8%B0"><i _ngcontent-c11="" class="fa fa-lg fa-google-plus"></i></a></li>
+                <li _ngcontent-c11=""><a _ngcontent-c11="" target="_self" href="https://www.a-mean-blog.com/login/twitter?redirectTo=/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%8C%93%EA%B8%80-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%93%B0%EA%B8%B0-%EB%B3%B4%EA%B8%B0"><i _ngcontent-c11="" class="fa fa-lg fa-twitter"></i></a></li>
+                <li _ngcontent-c11=""><a _ngcontent-c11="" target="_self" href="https://www.a-mean-blog.com/login/naver?redirectTo=/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%8C%93%EA%B8%80-%EA%B8%B0%EB%8A%A5-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%93%B0%EA%B8%B0-%EB%B3%B4%EA%B8%B0"><i _ngcontent-c11="" class="fa fa-lg naver">N</i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+</comment-form>
+
+</div>
+</comments>
+
+
+</blog-post>
+  </div>
+
+  <div _ngcontent-c1="" class="nav-wrapper floats">
+    <nav _ngcontent-c1="">
+      <div _ngcontent-c1="" class="panel panel-default">
+
+        
+        <div _ngcontent-c1="" class="panel-heading floats">
+          <!---->
+          <!----><span _ngcontent-c1="" class="float-right glyphicon glyphicon-remove inActive"></span>
+          <b _ngcontent-c1="">
+            <a _ngcontent-c1="" href="https://www.a-mean-blog.com/ko/blog">블로그</a>
+          </b>
+
+          <!---->
+        </div>
+
+        
+        <div _ngcontent-c1="" class="panel-body">
+          
+          <!---->
+
+          
+          <!----><!---->
+
+            
+            <ul _ngcontent-c1="" class="col-sm-3 list-unstyled">
+
+              
+              <!----><!---->
+                <li _ngcontent-c1="" class="category">
+                  <div _ngcontent-c1="" class="categoryContainer">
+                    <!----><span _ngcontent-c1="">1. </span>
+                    <a _ngcontent-c1="" title="MEAN Stack" href="https://www.a-mean-blog.com/ko/blog/MEAN-Stack">
+                      MEAN Stack
+                    </a>
+                  </div>
+                </li>
+                <!---->
+              <!---->
+                <li _ngcontent-c1="" class="category">
+                  <div _ngcontent-c1="" class="categoryContainer">
+                    <!----><span _ngcontent-c1="">2. </span>
+                    <a _ngcontent-c1="" title="Node JS 첫걸음" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C" class="active">
+                      Node JS 첫걸음
+                    </a>
+                  </div>
+                </li>
+                <!----><ul _ngcontent-c1="" class="openedCategory-inside">
+                  <!----><li _ngcontent-c1="" class="childCategory">
+                    <div _ngcontent-c1="" class="categoryContainer">
+                      <!---->
+                      <a _ngcontent-c1="" title="Hello World!" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/Hello-World">
+                        Hello World!
+                      </a>
+                    </div>
+                  </li><li _ngcontent-c1="" class="childCategory">
+                    <div _ngcontent-c1="" class="categoryContainer">
+                      <!---->
+                      <a _ngcontent-c1="" title="주소록 만들기" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EC%A3%BC%EC%86%8C%EB%A1%9D-%EB%A7%8C%EB%93%A4%EA%B8%B0">
+                        주소록 만들기
+                      </a>
+                    </div>
+                  </li><li _ngcontent-c1="" class="childCategory">
+                    <div _ngcontent-c1="" class="categoryContainer">
+                      <!---->
+                      <a _ngcontent-c1="" title="게시판 만들기" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0" class="">
+                        게시판 만들기
+                      </a>
+                    </div>
+                  </li><li _ngcontent-c1="" class="childCategory">
+                    <div _ngcontent-c1="" class="categoryContainer">
+                      <!---->
+                      <a _ngcontent-c1="" title="게시판 만들기(고급)" href="https://www.a-mean-blog.com/ko/blog/Node-JS-%EC%B2%AB%EA%B1%B8%EC%9D%8C/%EA%B2%8C%EC%8B%9C%ED%8C%90-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EA%B3%A0%EA%B8%89" class="active">
+                        게시판 만들기(고급)
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              <!---->
+                <li _ngcontent-c1="" class="category">
+                  <div _ngcontent-c1="" class="categoryContainer">
+                    <!----><span _ngcontent-c1="">3. </span>
+                    <a _ngcontent-c1="" title="Node JS API" href="https://www.a-mean-blog.com/ko/blog/Node-JS-API">
+                      Node JS API
+                    </a>
+                  </div>
+                </li>
+                <!---->
+              <!---->
+                <li _ngcontent-c1="" class="category">
+                  <div _ngcontent-c1="" class="categoryContainer">
+                    <!----><span _ngcontent-c1="">4. </span>
+                    <a _ngcontent-c1="" title="Angular" href="https://www.a-mean-blog.com/ko/blog/Angular">
+                      Angular
+                    </a>
+                  </div>
+                </li>
+                <!---->
+              <!---->
+                <li _ngcontent-c1="" class="category">
+                  <div _ngcontent-c1="" class="categoryContainer">
+                    <!---->
+                    <a _ngcontent-c1="" title="단편강좌" href="https://www.a-mean-blog.com/ko/blog/%EB%8B%A8%ED%8E%B8%EA%B0%95%EC%A2%8C">
+                      단편강좌
+                    </a>
+                  </div>
+                </li>
+                <!---->
+              
+
+            </ul>
+
+            
+            <!---->
+
+          
+
+          <!---->
+
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <to-the-top _ngcontent-c1="" _nghost-c3=""><div _ngcontent-c3="" class="arrow fadeIn" style="left: 548px;">
+  <span _ngcontent-c3="">UP</span>
+</div>
+</to-the-top>
+</div>
+
+<!----><div _ngcontent-c1="" class="mobile-ad">
+  <!---->
+  <!----><mb4-adsense _ngcontent-c1="" class="mobileAd" _nghost-c2="">
+    <ins _ngcontent-c2="" class="adsbygoogle" style="width: 623.333px; height: 50px; display: inline-block;" data-ad-client="ca-pub-8196807384563990" data-ad-slot="7006771466" data-adsbygoogle-status="done"><ins id="aswift_5_expand" style="display:inline-table;border:none;height:50px;margin:0;padding:0;position:relative;visibility:visible;width:623px;background-color:transparent;"><ins id="aswift_5_anchor" style="display:block;border:none;height:50px;margin:0;padding:0;position:relative;visibility:visible;width:623px;background-color:transparent;"><iframe id="aswift_5" name="aswift_5" style="left:0;position:absolute;top:0;border:0;width:623px;height:50px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="623" height="50" frameborder="0" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/ads(4).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!d" data-google-query-id="CKXZ-LqPhu0CFcg34Aod93EESA" data-load-complete="true"></iframe></ins></ins></ins>
+  </mb4-adsense>
+</div>
+</ng-component>
+    </div>
+  </div>
+</div>
+
+<footer _ngcontent-c0="">
+  <span _ngcontent-c0="">© 2020 A MEAN BLOG.</span> <span _ngcontent-c0="">All Rights Reserved.</span> <a _ngcontent-c0="" href="mailto:ianh@a-mean-blog.com" target="_top"><span _ngcontent-c0="">ianh@a-mean-blog.com</span></a>
+</footer>
+</app-root><script type="text/javascript" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/inline.375fe5116a0e31b8d166.bundle.js.다운로드"></script><script type="text/javascript" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/polyfills.8513422db8d7e355995f.bundle.js.다운로드"></script><script type="text/javascript" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/main.f6273619491978345815.bundle.js.다운로드"></script><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_1_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/ads(5).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!1" data-load-complete="true"></iframe></ins></ins></ins><iframe id="google_osd_static_frame_9459233239766" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/saved_resource.html"></iframe></body><iframe id="google_esf" name="google_esf" src="./Node JS 첫걸음_게시판 만들기(고급)_ 게시판 - 댓글 기능 만들기 1 (쓰기, 보기) - A MEAN Blog_files/zrt_lookup.html" data-ad-client="ca-pub-8196807384563990" style="display: none;"></iframe></html>
