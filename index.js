@@ -5,6 +5,7 @@ var methodOverride = require('method-override');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('./config/passport');
+var util = require('./util');
 var app = express();
 
 // DB setting
@@ -12,7 +13,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect(process.env.MONGO_DB);
+mongoose.connect('mongodb+srv://hj:shj3259@authpractice.cxnbp.mongodb.net/AuthPractice?retryWrites=true&w=majority');
 var db = mongoose.connection;
 db.once('open', function(){
   console.log('DB connected');
@@ -43,7 +44,9 @@ app.use(function(req,res,next){
 
 // Routes
 app.use('/', require('./routes/home'));
-app.use('/posts', require('./routes/posts'));
+app.use('/lists', require('./routes/lists'));
+app.use('/search', util.getPostQueryString, require('./routes/search'));
+app.use('/posts', util.getPostQueryString, require('./routes/posts'));
 app.use('/users', require('./routes/users'));
 
 // Port setting

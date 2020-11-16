@@ -45,8 +45,8 @@ async function createSearchQuery(queries){ // 4
         }
         if(userIds.length>0) postQueries.push({author:{$in:userIds}});
       }
-      if(postQueries.length > 0) searchQuery = {$or:postQueries};
-      else searchQuery = null; 
+      if(postQueries.length>0) searchQuery = {$or:postQueries}; // 2-3
+      else searchQuery = null;                                  // 2-3
     }
     return searchQuery;
 }

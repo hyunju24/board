@@ -30,3 +30,7 @@ body {
 .user-form {
   width: 400px;
 }
+
+.highlighted {
+  background-color: yellow;
+}
