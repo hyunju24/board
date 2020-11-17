@@ -1,3 +1,4 @@
+
 <div>Teachable Machine Pose Model</div>
 <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <div class="file-upload">
@@ -111,22 +112,60 @@ $('.image-upload-wrap').bind('dragover', function () {
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
 
-        for (let i = 0; i < maxPredictions; i++) {
+        /*for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
             labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
+        } */
+        var poseresult = prediction[1].probability.toFixed(2); 
+        labelContainer.innerHTML = poseresult;
 
         // finally draw the poses
         drawPose(pose);
 
         var image2 = document.getElementById("face-image");
         const prediction2 = await model2.predict(image2, false);
-
+        var sum = 0;
+        var temp = 0;
         for (let i = 0; i < maxPredictions2; i++){
-          const classPrediction2 = prediction2[i].className + ": " + prediction2[i].probability.toFixed(2);
-          labelContainer2.childNodes[i].innerHTML = classPrediction2;
-        }
+          switch(i) {
+            case 0:
+              temp = "<%=lists.fc_angry%>";
+              break;
+            case 1:
+              temp = "<%=lists.fc_disgust%>";
+              break;
+            case 2:
+              temp = "<%=lists.fc_fear%>";
+              break;
+            case 3:
+              temp = "<%=lists.fc_laugh%>";
+              break;
+            case 4:
+              temp = "<%=lists.fc_neutral%>";
+              break;
+            case 5:
+              temp = "<%=lists.fc_sad%>";
+              break;
+            case 6:
+              temp = "<%=lists.fc_smile%>";
+              break;
+            case 7:
+              temp = "<%=lists.fc_surprise%>";
+              break;
+          }
+            console.log(temp);
+            prediction2[i].probability = Math.abs(temp - prediction2[i].probability)*temp;
+            sum += prediction2[i].probability
+          }
+      var faceresult = 1-sum;
+      labelContainer2.innerHTML = faceresult;
+
+      var fcrate="<%=lists.face_rate%>";
+      var psrate="<%=lists.pose_rate%>";
+      //result가 최종 결과값
+      var result = faceresult*fcrate + poseresult*psrate;
+      console.log(result);
     }
 
     function drawPose(pose) {

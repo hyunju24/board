@@ -14,9 +14,14 @@ router.get('/', async function(req, res){
   });
 
 
-router.get('/image1', function(req, res){
-  var zzal = List.find({name:'image1'},{_id:false})
-  res.render('lists/test', {zzal : zzal});
+router.get('/image1', async function(req, res){
+  await List.findOne({name:'image1'})
+    .exec(function(err, lists){
+      if(err) return res.json(err);
+      res.render('lists/test', {lists:lists});
+    });
+  //console.log(zzal);
+ // res.render('lists/test', {zzal : zzal});
   /* fs.readFile('views/lists/test.html', function(error, data){
     if(error){
       console.log(error);

@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 var mongoose = require('mongoose');
 
 // schema
@@ -12,7 +13,7 @@ var listSchema = mongoose.Schema({
   fc_neutral:{type:Number, required:[true]},
   fc_sad:{type:Number, required:[true]},
   fc_smile:{type:Number, required:[true]},
-  fc_surprise:{type:Number, required:[true]},
+  fc_surprise:{type:Number, required:[true]}
   //category: {type:String, required:[true]},
   //참조 구현 
   //author:{type:mongoose.Schema.Types.ObjectId, ref:'user', required:true},
