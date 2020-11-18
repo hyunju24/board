@@ -1,181 +1,193 @@
 
-<div>Teachable Machine Pose Model</div>
-<script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<div class="file-upload">
-  <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+<head>
+  <%- include('../partials/head') %>
+</head>
+<body>
+  <%- include('../partials/nav') %>
 
-  <div class="image-upload-wrap">
-    <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
-    <div class="drag-text">
-      <h3>Drag and drop a file or select add Image</h3>
+  <div class="container mb-3">
+
+    <h2 class="mb-3">박하선짤</h2>
+
+    <div>Teachable Machine Pose Model</div>
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <div class="file-upload">
+      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+
+      <div class="image-upload-wrap">
+        <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+        <div class="drag-text">
+          <h6>Drag and drop a file or select add Image</h6>
+        </div>
+      </div>
+      <div class="file-upload-content">
+        <img class="file-upload-image" id="pose-image" src="#" alt="your image" />
+        <img class="file-upload-image" id="face-image" src="#" alt="your image" />
+        <div class="image-title-wrap">
+          <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="file-upload-content">
-    <img class="file-upload-image" id="pose-image" src="#" alt="your image" />
-    <img class="file-upload-image" id="face-image" src="#" alt="your image" />
-    <div class="image-title-wrap">
-      <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-    </div>
-  </div>
-</div>
-<div><canvas id="canvas"></canvas></div>
-<div id="label-container"></div>
-<!-- <div><canvas id="canvas2"></canvas></div> -->
-<div id="label-container2"></div>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-<script>function readURL(input) {
-  if (input.files && input.files[0]) {
+    <div><canvas id="canvas"></canvas></div>
+    <div id="label-container"></div>
+    <!-- <div><canvas id="canvas2"></canvas></div> -->
+    <div id="label-container2"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <script>function readURL(input) {
+      if (input.files && input.files[0]) {
 
-    var reader = new FileReader();
+        var reader = new FileReader();
 
-    reader.onload = function(e) {
-      $('.image-upload-wrap').hide();
+        reader.onload = function(e) {
+          $('.image-upload-wrap').hide();
 
-      $('.file-upload-image').attr('src', e.target.result);
-      $('.file-upload-content').show();
+          $('.file-upload-image').attr('src', e.target.result);
+          $('.file-upload-content').show();
 
-      $('.image-title').html(input.files[0].name);
-    };
+          $('.image-title').html(input.files[0].name);
+        };
 
-    reader.readAsDataURL(input.files[0]);
-    init().then(function(){
-      predict();
+        reader.readAsDataURL(input.files[0]);
+        init().then(function(){
+          predict();
+        });
+
+      } else {
+        removeUpload();
+      }
+    }
+
+    function removeUpload() {
+      $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+      $('.file-upload-content').hide();
+      $('.image-upload-wrap').show();
+    }
+    $('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+      });
+      $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
     });
+    </script>
+    <script type="text/javascript">
+        // More API functions here:
+        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
 
-  } else {
-    removeUpload();
-  }
-}
+        // the link to your model provided by Teachable Machine export panel
+        const URL = "https://teachablemachine.withgoogle.com/models/ITo8-Dj-e/";
+        let model, ctx, labelContainer, maxPredictions;
 
-function removeUpload() {
-  $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-  $('.file-upload-content').hide();
-  $('.image-upload-wrap').show();
-}
-$('.image-upload-wrap').bind('dragover', function () {
-		$('.image-upload-wrap').addClass('image-dropping');
-	});
-	$('.image-upload-wrap').bind('dragleave', function () {
-		$('.image-upload-wrap').removeClass('image-dropping');
-});
-</script>
-<script type="text/javascript">
-    // More API functions here:
-    // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
+        const URL2 = "https://teachablemachine.withgoogle.com/models/oeGCjTXKu/";
+        let model2, ctx2, labelContainer2, maxPredictions2;
 
-    // the link to your model provided by Teachable Machine export panel
-    const URL = "https://teachablemachine.withgoogle.com/models/ITo8-Dj-e/";
-    let model, ctx, labelContainer, maxPredictions;
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
 
-    const URL2 = "https://teachablemachine.withgoogle.com/models/oeGCjTXKu/";
-    let model2, ctx2, labelContainer2, maxPredictions2;
+            const modelURL2 = URL2 + "model.json";
+            const metadataURL2 = URL2 + "metadata.json";
 
-    async function init() {
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
+            // load the model and metadata
+            // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+            // Note: the pose library adds a tmPose object to your window (window.tmPose)
+            model = await tmPose.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
 
-        const modelURL2 = URL2 + "model.json";
-        const metadataURL2 = URL2 + "metadata.json";
+            model2 = await tmImage.load(modelURL2, metadataURL2);
+            maxPredictions2 = model2.getTotalClasses();
 
-        // load the model and metadata
-        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-        // Note: the pose library adds a tmPose object to your window (window.tmPose)
-        model = await tmPose.load(modelURL, metadataURL);
-        maxPredictions = model.getTotalClasses();
+            // append/get elements to the DOM
+            const canvas = document.getElementById('canvas');
+            canvas.width = 200; canvas.height = 200;
+            ctx = canvas.getContext('2d');
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) { // and class labels
+                labelContainer.appendChild(document.createElement("div"));
+            }
 
-        model2 = await tmImage.load(modelURL2, metadataURL2);
-        maxPredictions2 = model2.getTotalClasses();
-
-        // append/get elements to the DOM
-        const canvas = document.getElementById('canvas');
-        canvas.width = 200; canvas.height = 200;
-        ctx = canvas.getContext('2d');
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
+            labelContainer2 = document.getElementById("label-container2");
+            for (let i = 0; i < maxPredictions2; i++) { // and class labels
+                labelContainer2.appendChild(document.createElement("div"));
+            }
         }
 
-        labelContainer2 = document.getElementById("label-container2");
-        for (let i = 0; i < maxPredictions2; i++) { // and class labels
-            labelContainer2.appendChild(document.createElement("div"));
+        async function predict() {
+            var image = document.getElementById("pose-image");
+            const flipHorizontal = false;
+            // Prediction #1: run input through posenet
+            // estimatePose can take in an image, video or canvas html element
+            const { pose, posenetOutput } = await model.estimatePose(image, flipHorizontal);
+            // Prediction 2: run input through teachable machine classification model
+            const prediction = await model.predict(posenetOutput);
+
+            /*for (let i = 0; i < maxPredictions; i++) {
+                const classPrediction =
+                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+            } */
+            var poseresult = prediction[1].probability.toFixed(2); 
+            labelContainer.innerHTML = poseresult;
+
+            // finally draw the poses
+            drawPose(pose);
+
+            var image2 = document.getElementById("face-image");
+            const prediction2 = await model2.predict(image2, false);
+            var sum = 0;
+            var temp = 0;
+            for (let i = 0; i < maxPredictions2; i++){
+              switch(i) {
+                case 0:
+                  temp = "<%=lists.fc_angry%>";
+                  break;
+                case 1:
+                  temp = "<%=lists.fc_disgust%>";
+                  break;
+                case 2:
+                  temp = "<%=lists.fc_fear%>";
+                  break;
+                case 3:
+                  temp = "<%=lists.fc_laugh%>";
+                  break;
+                case 4:
+                  temp = "<%=lists.fc_neutral%>";
+                  break;
+                case 5:
+                  temp = "<%=lists.fc_sad%>";
+                  break;
+                case 6:
+                  temp = "<%=lists.fc_smile%>";
+                  break;
+                case 7:
+                  temp = "<%=lists.fc_surprise%>";
+                  break;
+              }
+                console.log(temp);
+                prediction2[i].probability = Math.abs(temp - prediction2[i].probability)*temp;
+                sum += prediction2[i].probability
+              }
+          var faceresult = 1-sum;
+          labelContainer2.innerHTML = faceresult;
+
+          var fcrate="<%=lists.face_rate%>";
+          var psrate="<%=lists.pose_rate%>";
+          //result가 최종 결과값
+          var result = faceresult*fcrate + poseresult*psrate;
+          console.log(result);
         }
-    }
 
-    async function predict() {
-        var image = document.getElementById("pose-image");
-        const flipHorizontal = false;
-        // Prediction #1: run input through posenet
-        // estimatePose can take in an image, video or canvas html element
-        const { pose, posenetOutput } = await model.estimatePose(image, flipHorizontal);
-        // Prediction 2: run input through teachable machine classification model
-        const prediction = await model.predict(posenetOutput);
-
-        /*for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-        } */
-        var poseresult = prediction[1].probability.toFixed(2); 
-        labelContainer.innerHTML = poseresult;
-
-        // finally draw the poses
-        drawPose(pose);
-
-        var image2 = document.getElementById("face-image");
-        const prediction2 = await model2.predict(image2, false);
-        var sum = 0;
-        var temp = 0;
-        for (let i = 0; i < maxPredictions2; i++){
-          switch(i) {
-            case 0:
-              temp = "<%=lists.fc_angry%>";
-              break;
-            case 1:
-              temp = "<%=lists.fc_disgust%>";
-              break;
-            case 2:
-              temp = "<%=lists.fc_fear%>";
-              break;
-            case 3:
-              temp = "<%=lists.fc_laugh%>";
-              break;
-            case 4:
-              temp = "<%=lists.fc_neutral%>";
-              break;
-            case 5:
-              temp = "<%=lists.fc_sad%>";
-              break;
-            case 6:
-              temp = "<%=lists.fc_smile%>";
-              break;
-            case 7:
-              temp = "<%=lists.fc_surprise%>";
-              break;
-          }
-            console.log(temp);
-            prediction2[i].probability = Math.abs(temp - prediction2[i].probability)*temp;
-            sum += prediction2[i].probability
-          }
-      var faceresult = 1-sum;
-      labelContainer2.innerHTML = faceresult;
-
-      var fcrate="<%=lists.face_rate%>";
-      var psrate="<%=lists.pose_rate%>";
-      //result가 최종 결과값
-      var result = faceresult*fcrate + poseresult*psrate;
-      console.log(result);
-    }
-
-    function drawPose(pose) {
-         var image = document.getElementById("pose-image");
-         ctx.drawImage(image, 0, 0);
-            if (pose) {
-                const minPartConfidence = 0.5;
-                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
-                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+        function drawPose(pose) {
+            var image = document.getElementById("pose-image");
+            ctx.drawImage(image, 0, 0);
+                if (pose) {
+                    const minPartConfidence = 0.5;
+                    tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                    tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+            }
         }
-    }
 
-</script>
+    </script>
+  </div>
+</body>

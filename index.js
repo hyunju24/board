@@ -48,6 +48,7 @@ app.use('/lists', require('./routes/lists'));
 app.use('/search', util.getPostQueryString, require('./routes/search'));
 app.use('/posts', util.getPostQueryString, require('./routes/posts'));
 app.use('/users', require('./routes/users'));
+app.use('/comments', util.getPostQueryString, require('./routes/comments'));
 
 // Port setting
 var port = 3000;
