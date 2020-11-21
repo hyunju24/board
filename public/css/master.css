@@ -34,3 +34,8 @@ body {
 .highlighted {
   background-color: yellow;
 }
+
+#userresults{
+  display: none; 
+  z-index: -1;
+}

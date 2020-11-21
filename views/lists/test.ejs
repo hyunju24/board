@@ -141,28 +141,28 @@
             for (let i = 0; i < maxPredictions2; i++){
               switch(i) {
                 case 0:
-                  temp = "<%=lists.fc_angry%>";
+                  temp = <%=lists.fc_angry%>;
                   break;
                 case 1:
-                  temp = "<%=lists.fc_disgust%>";
+                  temp = <%=lists.fc_disgust%>;
                   break;
                 case 2:
-                  temp = "<%=lists.fc_fear%>";
+                  temp = <%=lists.fc_fear%>;
                   break;
                 case 3:
-                  temp = "<%=lists.fc_laugh%>";
+                  temp = <%=lists.fc_laugh%>;
                   break;
                 case 4:
-                  temp = "<%=lists.fc_neutral%>";
+                  temp = <%=lists.fc_neutral%>;
                   break;
                 case 5:
-                  temp = "<%=lists.fc_sad%>";
+                  temp = <%=lists.fc_sad%>;
                   break;
                 case 6:
-                  temp = "<%=lists.fc_smile%>";
+                  temp = <%=lists.fc_smile%>;
                   break;
                 case 7:
-                  temp = "<%=lists.fc_surprise%>";
+                  temp = <%=lists.fc_surprise%>;
                   break;
               }
                 console.log(temp);
@@ -172,12 +172,13 @@
           var faceresult = 1-sum;
           labelContainer2.innerHTML = faceresult;
 
-          var fcrate="<%=lists.face_rate%>";
-          var psrate="<%=lists.pose_rate%>";
+          var fcrate=<%=lists.face_rate%>;
+          var psrate=<%=lists.pose_rate%>;
           //result가 최종 결과값
-          var result = faceresult*fcrate + poseresult*psrate;
+          var result = (faceresult*fcrate + poseresult*psrate) * 100;
           document.getElementById('userresults').value = result;
           console.log(result);
+          console.log(typeof result); 
         }
 
         function drawPose(pose) {
@@ -190,11 +191,13 @@
             }
         }
 
+        
+
     </script>
     <form action="/lists/<%= lists.name %>?_method=put" method="post" name="send_result">
       <div class="form-group row">
         <div class="col-sm-9 col-sm-offset-3">
-          <input type="hidden" id="userresults" name="userresults" value=0 >
+          <input type="number" step="any" id="userresults" name="userresults" value=0 >
           <button type="submit" class="btn btn-primary">랭킹등록</button>
         </div>
       </div>

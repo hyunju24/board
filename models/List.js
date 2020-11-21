@@ -15,7 +15,7 @@ var listSchema = mongoose.Schema({
   fc_sad:{type:Number, required:[true]},
   fc_smile:{type:Number, required:[true]},
   fc_surprise:{type:Number, required:[true]},
-  result:{type:Array},
+  result:[{type:Number}],
   //category: {type:String, required:[true]},
   //참조 구현 
   //author:{type:mongoose.Schema.Types.ObjectId, ref:'user', required:true},
