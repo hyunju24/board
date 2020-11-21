@@ -24,19 +24,15 @@
               <td colspan=3> There is no data to show :( </td>
             </tr>
           <% } %>
-          <tr>
+          <% lists.forEach(function(list) { %>
+            <tr>
               <td>
-                <a href="/lists/image1">
-                  <img src="./zzal/박하선 표정.png" width="300" height="200"></img>
+                <a href="/lists/<%= list.name %>">
+       <!-- 1 --> <img src="<%= list.img %>" width="300" height="200"></img>
                 </a>
               </td>
-              <td>
-                <img src="./zzal/goja.png" width="300" height="200"></img>
-              </td>
-              <td>
-                <img src="./zzal/고경표짤.jfif" width="300" height="200"></img>
-              </td>
             </tr>
+          <% }) %>
         </tbody>
 
       </table>

@@ -32,6 +32,7 @@
     <div id="label-container"></div>
     <!-- <div><canvas id="canvas2"></canvas></div> -->
     <div id="label-container2"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
@@ -175,6 +176,7 @@
           var psrate="<%=lists.pose_rate%>";
           //result가 최종 결과값
           var result = faceresult*fcrate + poseresult*psrate;
+          document.getElementById('userresults').value = result;
           console.log(result);
         }
 
@@ -189,5 +191,14 @@
         }
 
     </script>
+    <form action="/lists/<%= lists.name %>?_method=put" method="post" name="send_result">
+      <div class="form-group row">
+        <div class="col-sm-9 col-sm-offset-3">
+          <input type="hidden" id="userresults" name="userresults" value=0 >
+          <button type="submit" class="btn btn-primary">랭킹등록</button>
+        </div>
+      </div>
+    </form>
+    
   </div>
 </body>
