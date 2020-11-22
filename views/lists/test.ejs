@@ -5,9 +5,33 @@
 <body>
   <%- include('../partials/nav') %>
 
+
   <div class="container mb-3">
 
-    <h2 class="mb-3">박하선짤</h2>
+    <h2 class="mb-3"><%=lists.zzal%>짤</h2>
+
+    <img src="../../../../<%=lists.img%>" width="300" height="200"></img>
+
+    <br>
+    <br>
+    <button type="button" class="btn btn-primary" onclick="rank();">랭킹확인</button>
+    <br>
+    <br>
+
+    <div id="rankingContainer-1"></div>
+    <div id="rankingContainer-2"></div>
+    <div id="rankingContainer-3"></div>
+    <div id="rankingContainer-4"></div>
+    <div id="rankingContainer-5"></div>
+    <div id="rankingContainer-6"></div>
+    <div id="rankingContainer-7"></div>
+    <div id="rankingContainer-8"></div>
+    <div id="rankingContainer-9"></div>
+    <div id="rankingContainer-10"></div>
+
+    <br>
+    <br>
+
 
     <div>Teachable Machine Pose Model</div>
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -30,7 +54,6 @@
     </div>
     <div><canvas id="canvas"></canvas></div>
     <div id="label-container"></div>
-    <!-- <div><canvas id="canvas2"></canvas></div> -->
     <div id="label-container2"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
@@ -178,7 +201,7 @@
           var result = (faceresult*fcrate + poseresult*psrate) * 100;
           document.getElementById('userresults').value = result;
           console.log(result);
-          console.log(typeof result); 
+          // console.log(typeof result); 
         }
 
         function drawPose(pose) {
@@ -189,6 +212,64 @@
                     tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
                     tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
             }
+        }
+
+        function rank(){
+          <%var total = lists.__v; %>
+          var ranking = []; 
+          <% for(var i = 0; i < total; i++){ %>
+            ranking.push(<%=lists.result[i]%>);
+          <% } %> 
+          ranking.sort(function(a, b){
+            return b - a;
+          });  
+
+          // <% for(var i = 0; i < total; i++){ %>
+          //   rankContainer.innerHTML = i + ":" + ranking[i]; 
+          // <% } %>
+          console.log(ranking);
+
+          const rankingContainer1 = document.getElementById("rankingContainer-1"); 
+          rankingContainer1.appendChild(document.createElement("div"));
+          rankingContainer1.innerHTML = 1 + " : " + ranking[0] + "<br>"; 
+
+          const rankingContainer2 = document.getElementById("rankingContainer-2");
+          rankingContainer2.appendChild(document.createElement("div"));
+          rankingContainer2.innerHTML = 2 + " : " + ranking[1] + "<br>"; 
+
+          const rankingContainer3 = document.getElementById("rankingContainer-3");
+          rankingContainer3.appendChild(document.createElement("div"));
+          rankingContainer3.innerHTML = 3 + " : " + ranking[2] + "<br>"; 
+
+          const rankingContainer4 = document.getElementById("rankingContainer-4");
+          rankingContainer4.appendChild(document.createElement("div"));
+          rankingContainer4.innerHTML = 4 + " : " + ranking[3] + "<br>"; 
+
+          const rankingContainer5 = document.getElementById("rankingContainer-5");
+          rankingContainer5.appendChild(document.createElement("div"));
+          rankingContainer5.innerHTML = 5 + " : " + ranking[4] + "<br>"; 
+
+          const rankingContainer6 = document.getElementById("rankingContainer-6");
+          rankingContainer6.appendChild(document.createElement("div"));
+          rankingContainer6.innerHTML = 6 + " : " + ranking[5] + "<br>"; 
+
+          const rankingContainer7 = document.getElementById("rankingContainer-7");
+          rankingContainer7.appendChild(document.createElement("div"));
+          rankingContainer7.innerHTML = 7 + " : " + ranking[6] + "<br>"; 
+
+          const rankingContainer8 = document.getElementById("rankingContainer-8");
+          rankingContainer8.appendChild(document.createElement("div"));
+          rankingContainer8.innerHTML = 8 + " : " + ranking[7] + "<br>"; 
+
+          const rankingContainer9 = document.getElementById("rankingContainer-9");
+          rankingContainer9.appendChild(document.createElement("div"));
+          rankingContainer9.innerHTML = 9 + " : " + ranking[8] + "<br>"; 
+
+          const rankingContainer10 = document.getElementById("rankingContainer-10");
+          rankingContainer10.appendChild(document.createElement("div"));
+          rankingContainer10.innerHTML = 10 + " : " + ranking[9] + "<br>"; 
+
+          
         }
 
         
@@ -202,6 +283,10 @@
         </div>
       </div>
     </form>
+    
+    
+
+    
     
   </div>
 </body>

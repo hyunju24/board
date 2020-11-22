@@ -23,6 +23,8 @@ router.get('/:name', async function(req, res){
     });
 
 
+
+
 // update
 router.put('/:name', function(req, res, next){
   List.findOne({name:req.params.name})
@@ -45,6 +47,8 @@ router.put('/:name', function(req, res, next){
         res.redirect('/lists/'+list.name);
       });
   });
+
+  
 });
   //console.log(zzal);
  // res.render('lists/test', {zzal : zzal});
@@ -58,6 +62,16 @@ router.put('/:name', function(req, res, next){
   });
   */
 });
+
+//ranking 
+// router.get('/:name', async function(req, res){
+//   await List.find({result})
+//   .sort({'result':-1})
+//   .exec(function(err, ranking){
+//     console.log(ranking + "\n"); 
+//     return; 
+//   })
+// }); 
 
 module.exports = router;
 

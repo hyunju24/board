@@ -16,6 +16,7 @@ var listSchema = mongoose.Schema({
   fc_smile:{type:Number, required:[true]},
   fc_surprise:{type:Number, required:[true]},
   result:[{type:Number}],
+  zzal:{type: String, required:[true]}
   //category: {type:String, required:[true]},
   //참조 구현 
   //author:{type:mongoose.Schema.Types.ObjectId, ref:'user', required:true},
