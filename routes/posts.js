@@ -1,7 +1,11 @@
 var express  = require('express');
 var router = express.Router();
+var multer = require('multer'); // 1
+var path = require('path');
+var upload = multer({ dest: 'public/uploadedFiles/' });
 var Post = require('../models/Post');
 var Comment = require('../models/Comment');
+var File = require('../models/File'); // 3
 var util = require('../util');
 
 // Index
@@ -37,7 +41,9 @@ router.get('/new', util.isLoggedin, function(req, res){
 });
 
 // create
-router.post('/', util.isLoggedin, function(req, res){
+router.post('/', util.isLoggedin, upload.single('attachment'), async function(req, res){ // 4-1
+  var attachment = req.file?await File.createNewInstance(req.file, req.user._id):undefined; // 4-2
+  req.body.attachment = attachment; // 4-3
   req.body.author = req.user._id;
   Post.create(req.body, function(err, post){
     if(err){
@@ -45,9 +51,14 @@ router.post('/', util.isLoggedin, function(req, res){
       req.flash('errors', util.parseError(err));
       return res.redirect('/posts/new'+res.locals.getPostQueryString());
     }
-    res.redirect('/posts'+res.locals.getPostQueryString(false, {page:1}));
+    if(attachment){                 // 4-4
+      attachment.postId = post._id; // 4-4
+      attachment.save();            // 4-4
+    }                               // 4-4
+    res.redirect('/posts'+res.locals.getPostQueryString(false, { page:1, searchText:'' }));
   });
 });
+
 
 // show
 router.get('/:id', function(req, res){
@@ -55,8 +66,8 @@ router.get('/:id', function(req, res){
   var commentError = req.flash('commentError')[0] || { _id:null, parentComment: null, errors:{}};
 
   Promise.all([
-      Post.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' }),
-      Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
+    Post.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' }).populate({path:'attachment',match:{isDeleted:false}}), 
+    Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
     ])
     .then(([post, comments]) => {
       res.render('posts/show', { post:post, comments:comments, commentForm:commentForm, commentError:commentError});
