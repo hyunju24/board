@@ -18,12 +18,32 @@ router.get('/', async function(req, res){
   var skip = (page-1)*limit;
   var count = await Post.countDocuments({});
   var maxPage = Math.ceil(count/limit);
-  var posts = await Post.find({})
-    .populate('author')
-    .sort('-createdAt')
-    .skip(skip)
-    .limit(limit)
-    .exec();
+  posts = await Post.aggregate([
+    { $lookup: {
+        from: 'users',
+        localField: 'author',
+        foreignField: '_id',
+        as: 'author'
+    } },
+    { $unwind: '$author' },
+    { $sort : { createdAt: -1 } },
+    { $skip: skip },
+    { $limit: limit },
+    { $lookup: {
+        from: 'comments',
+        localField: '_id',
+        foreignField: 'post',
+        as: 'comments'
+    } },
+    { $project: {
+        title: 1,
+        author: {
+          username: 1,
+        },
+        views: 1,
+        createdAt: 1
+    } },
+  ]).exec();
 
   res.render('posts/index', {
     posts:posts,
@@ -70,6 +90,8 @@ router.get('/:id', function(req, res){
     Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
     ])
     .then(([post, comments]) => {
+      post.views++; // 2
+      post.save();  // 2
       res.render('posts/show', { post:post, comments:comments, commentForm:commentForm, commentError:commentError});
     })
     .catch((err) => {
@@ -83,7 +105,9 @@ router.get('/:id/edit', util.isLoggedin, checkPermission, function(req, res){
   var post = req.flash('post')[0];
   var errors = req.flash('errors')[0] || {};
   if(!post){
-    Post.findOne({_id:req.params.id}, function(err, post){
+    Post.findOne({_id:req.params.id})                           // 1
+      .populate({path:'attachment',match:{isDeleted:false}})    // 1
+      .exec(function(err, post){                                // 1
         if(err) return res.json(err);
         res.render('posts/edit', { post:post, errors:errors });
       });
@@ -95,7 +119,12 @@ router.get('/:id/edit', util.isLoggedin, checkPermission, function(req, res){
 });
 
 // update
-router.put('/:id', util.isLoggedin, checkPermission, function(req, res){
+router.put('/:id', util.isLoggedin, checkPermission, upload.single('newAttachment'), async function(req, res){
+  var post = await Post.findOne({_id:req.params.id}).populate({path:'attachment',match:{isDeleted:false}});
+  if(post.attachment && (req.file || !req.body.attachment)){
+    post.attachment.processDelete();
+  }
+  req.body.attachment = req.file?await File.createNewInstance(req.file, req.user._id, req.params.id):post.attachment;
   req.body.updatedAt = Date.now();
   Post.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true}, function(err, post){
     if(err){

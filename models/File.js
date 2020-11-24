@@ -10,6 +10,11 @@ var fileSchema = mongoose.Schema({ // 1
   isDeleted:{type:Boolean, default:false},
 });
 
+fileSchema.methods.processDelete = function(){ // 4
+  this.isDeleted = true;
+  this.save();
+};
+
 // model & export
 var File = mongoose.model('file', fileSchema);
 

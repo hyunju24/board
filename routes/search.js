@@ -9,12 +9,32 @@ router.get('/', async function(req, res){
     var posts = [];
 
     if(searchQuery) {
-      posts = await Post.find(searchQuery)
-        .populate('author')
-        .sort('-createdAt')
-        .exec();
+      posts = await Post.aggregate([
+        { $match: searchQuery },
+        { $lookup: {
+            from: 'users',
+            localField: 'author',
+            foreignField: '_id',
+            as: 'author'
+        } },
+        { $unwind: '$author' },
+        { $sort : { createdAt: -1 } },
+        { $lookup: {
+            from: 'comments',
+            localField: '_id',
+            foreignField: 'post',
+            as: 'comments'
+        } },
+        { $project: {
+            title: 1,
+            author: {
+              username: 1,
+            },
+            views: 1,
+            createdAt: 1
+        } },
+      ]).exec();
     }
-
     res.render('search', {
         posts:posts,
         searchType:req.query.searchType, // 2
