@@ -54,3 +54,33 @@ body {
   display: none; 
   z-index: -1;
 }
+
+.file-upload-input{
+  display: none; 
+  z-index: -1;
+}
+
+#pose-image{
+  display: none; 
+  z-index: -1;
+}
+
+#face-image{
+  display: none; 
+  z-index: -1;
+}
+
+@media screen and (min-width: 768px){
+  /* .container{
+    padding: 0 100px;
+  } */
+  
+  .list-container{
+    text-align: center;
+  }
+
+  .list-container img{
+    margin: 5px 4px;
+  }
+
+}

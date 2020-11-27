@@ -33,23 +33,23 @@
     <br>
 
 
-    <div>Teachable Machine Pose Model</div>
+    <!-- <div>Teachable Machine Pose Model</div> -->
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
-      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+      <button class="file-upload-btn btn btn-primary" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button> 
 
       <div class="image-upload-wrap">
         <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
-        <div class="drag-text">
+        <!-- <div class="drag-text">
           <h6>Drag and drop a file or select add Image</h6>
-        </div>
-      </div>
+        </div> --> 
+      </div>  
       <div class="file-upload-content">
-        <img class="file-upload-image" id="pose-image" src="#" alt="your image" />
-        <img class="file-upload-image" id="face-image" src="#" alt="your image" />
-        <div class="image-title-wrap">
+        <img class="file-upload-image" id="pose-image" src="#" alt='' /> 
+        <img class="file-upload-image" id="face-image" src="#" alt='' />
+        <!-- <div class="image-title-wrap">
           <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
-        </div>
+        </div> -->
       </div>
     </div>
     <div><canvas id="canvas"></canvas></div>
@@ -152,7 +152,7 @@
                 labelContainer.childNodes[i].innerHTML = classPrediction;
             } */
             var poseresult = prediction[1].probability.toFixed(2); 
-            labelContainer.innerHTML = poseresult;
+            // labelContainer.innerHTML = poseresult;
 
             // finally draw the poses
             drawPose(pose);
@@ -193,7 +193,7 @@
                 sum += prediction2[i].probability
               }
           var faceresult = 1-sum;
-          labelContainer2.innerHTML = faceresult;
+          // labelContainer2.innerHTML = faceresult;
 
           var fcrate=<%=lists.face_rate%>;
           var psrate=<%=lists.pose_rate%>;

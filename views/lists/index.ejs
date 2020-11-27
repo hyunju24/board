@@ -6,11 +6,23 @@
   <body>
     <%- include('../partials/nav') %>
 
-    <div class="container mb-3">
+    <div class="container mb-3 list-container">
 
       <h2 class="mb-3">List</h2>
 
-      <table class="board-table table table-sm border-bottom" style="text-align: center;">
+        <% if(lists == null || lists.length == 0){ %>
+          <p> There is no data to show :( </p>
+        <% } %>
+  
+      
+          <% lists.forEach(function(list) { %>
+            <a href="/lists/<%= list.name %>">
+              <img src="<%= list.img %>" width="300" height="200"></img>
+            </a>
+          <% }) %>
+      
+
+      <!-- <table class="board-table table table-sm border-bottom" style="text-align: center;">
 
         <thead class="thead-light">
           <tr>
@@ -28,14 +40,14 @@
             <tr>
               <td>
                 <a href="/lists/<%= list.name %>">
-       <!-- 1 --> <img src="<%= list.img %>" width="300" height="200"></img>
+                  <img src="<%= list.img %>" width="300" height="200"></img>
                 </a>
               </td>
             </tr>
           <% }) %>
         </tbody>
 
-      </table>
+      </table> -->
 
     </div>
   </body>
