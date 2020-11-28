@@ -7,6 +7,7 @@ var listSchema = mongoose.Schema({
   img: {type:String, required:[true]},
   face_rate:{type:Number, required:[true]},
   pose_rate:{type:Number, required:[true]},
+  poseURL:{type:String, required:[true], default:"https://teachablemachine.withgoogle.com/models/ITo8-Dj-e/"},
   fc_angry:{type:Number, required:[true]},
   fc_disgust:{type:Number, required:[true]},
   fc_fear:{type:Number, required:[true]},
