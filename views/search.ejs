@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%- include('partials/head') %>
   </head>
   <body>
@@ -46,17 +47,19 @@
         </tbody>
 
         <form action="search" method="get">
-            <div class="form-row">
+            <div id = "search-form" class="form-row">
                 <div class="form-group col-9"> <!-- 2 -->
                     <label>Search</label>
                     <div class="input-group">
-                      <select name="searchType" class="custom-select">
-                        <option value="title,body" <%= searchType=='title,body'?'selected':'' %>>Title, Body</option>
-                        <option value="title" <%= searchType=='title'?'selected':'' %>>Title</option>
-                        <option value="body" <%= searchType=='body'?'selected':'' %>>Body</option>
-                        <option value="author" <%= searchType=='author'?'selected':'' %>>User</option>
-                      </select>
-                      <input minLength="3" type="text" name="searchText" value="<%= searchText %>">
+                      <div>
+                        <select name="searchType" class="custom-select">
+                          <option value="title,body" <%= searchType=='title,body'?'selected':'' %>>Title, Body</option>
+                          <option value="title" <%= searchType=='title'?'selected':'' %>>Title</option>
+                          <option value="body" <%= searchType=='body'?'selected':'' %>>Body</option>
+                          <option value="author" <%= searchType=='author'?'selected':'' %>>User</option>
+                        </select>
+                      </div>
+                      <input id = "searchText" minLength="3" type="text" name="searchText" value="<%= searchText %>">
                       <div class="input-group-append">
                         <button class="btn btn-outline-primary" type="submit">search</button>
                       </div>

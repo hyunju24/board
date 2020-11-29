@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%- include('../partials/head') %>
   </head>
   <body>
@@ -25,7 +26,7 @@
  <!-- 1 -->   <div class="ml-2">
  <!-- 1 -->     <small>📁 Attachment: <%= post.attachment.originalFileName %> (<%= util.bytesToSize(post.attachment.size) %>)</small>
  <!-- 1 -->   </div>
-              <div>
+              <div class = "user-image-container">
                 <img src = "../uploadedFiles/<%= post.attachment.serverFileName %>"/>
               </div>
  <!-- 1 --> <% } %>
@@ -65,7 +66,7 @@
           <% comments.forEach(function(comment) { %>
             <div class="border-top pt-1 pb-1">
    <!-- 4 --> <% if(comment.isDeleted){ %>
-                <div class="text-muted p-2">(Deleted Commnet)</div>
+                <div class="text-muted p-2">(Deleted Comment)</div>
               <% } else { %>
               <div class="row">
                 <div class="col-3 col-md-2 col-lg-1 pl-4"><%= comment.author.username %></div>

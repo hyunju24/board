@@ -70,17 +70,38 @@ body {
   z-index: -1;
 }
 
-@media screen and (min-width: 768px){
-  /* .container{
-    padding: 0 100px;
-  } */
+@media screen and (max-width: 768px){
   
-  .list-container{
-    text-align: center;
+  .list-container img{
+    display:block;
+    margin: auto;
   }
 
-  .list-container img{
-    margin: 5px 4px;
+  .input-group {
+    width:auto;
+    display:grid;
+    grid-template-columns: 35% 60% 5%;
+  }
+
+  #show-page{
+    width: 120px;
+  }
+
+  .user-image-container img{
+    width: 100%;
+  }
+
+  .comment-show{
+    width: auto;
+  }
+  
+  .commentform{
+    width: 100%;
+    padding:5px;
+  }
+
+  .user-form{
+    width:auto;
   }
 
 }
