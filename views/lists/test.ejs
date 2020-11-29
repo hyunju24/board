@@ -12,31 +12,27 @@
 
     <img src="../../../../<%=lists.img%>" width="300" height="200"></img>
 
-    <br>
-    <br>
-    <button type="button" class="btn btn-primary" onclick="rank();">랭킹확인</button>
-    <br>
-    <br>
-
-    <div id="rankingContainer-1"></div>
-    <div id="rankingContainer-2"></div>
-    <div id="rankingContainer-3"></div>
-    <div id="rankingContainer-4"></div>
-    <div id="rankingContainer-5"></div>
-    <div id="rankingContainer-6"></div>
-    <div id="rankingContainer-7"></div>
-    <div id="rankingContainer-8"></div>
-    <div id="rankingContainer-9"></div>
-    <div id="rankingContainer-10"></div>
-
-    <br>
-    <br>
-
+    
 
     <!-- <div>Teachable Machine Pose Model</div> -->
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
-      <button class="file-upload-btn btn btn-primary" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button> 
+      <div class="btn-box">
+        <button type="button" class="btn btn-primary rank-btn" onclick="rank();">랭킹확인</button>
+        <button class="file-upload-btn btn btn-primary" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+           
+      </div> 
+
+      <div id="rankingContainer-1"></div>
+      <div id="rankingContainer-2"></div>
+      <div id="rankingContainer-3"></div>
+      <div id="rankingContainer-4"></div>
+      <div id="rankingContainer-5"></div>
+      <div id="rankingContainer-6"></div>
+      <div id="rankingContainer-7"></div>
+      <div id="rankingContainer-8"></div>
+      <div id="rankingContainer-9"></div>
+      <div id="rankingContainer-10"></div>
 
       <div class="image-upload-wrap">
         <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
@@ -52,7 +48,18 @@
         </div> -->
       </div>
     </div>
-    <div><canvas id="canvas"></canvas></div>
+    <div>
+      <strong id="result-box"></strong>
+      <form action="/lists/<%= lists.name %>?_method=put" method="post" name="send_result">
+        <div class="form-group row">
+          <div class="col-sm-9 col-sm-offset-3">
+            <input type="number" step="any" id="userresults" name="userresults" value=0 >
+            <button type="submit" class="btn btn-primary">랭킹등록</button>
+          </div>
+        </div>
+      </form> 
+      <canvas id="canvas"></canvas>
+    </div>
     <div id="label-container"></div>
     <div id="label-container2"></div>
 
@@ -200,6 +207,7 @@
           //result가 최종 결과값
           var result = (faceresult*fcrate + poseresult*psrate) * 100;
           document.getElementById('userresults').value = result;
+          document.getElementById('result-box').innerHTML = "싱크로율 => " + result; 
           console.log(result);
           // console.log(typeof result); 
         }
@@ -275,14 +283,6 @@
         
 
     </script>
-    <form action="/lists/<%= lists.name %>?_method=put" method="post" name="send_result">
-      <div class="form-group row">
-        <div class="col-sm-9 col-sm-offset-3">
-          <input type="number" step="any" id="userresults" name="userresults" value=0 >
-          <button type="submit" class="btn btn-primary">랭킹등록</button>
-        </div>
-      </div>
-    </form>
     
     
 

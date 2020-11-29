@@ -70,11 +70,31 @@ body {
   z-index: -1;
 }
 
+.container > img{
+  display: block; 
+  margin-bottom: 30px;
+}
+
+.btn-box{
+  display: flex; 
+  margin-bottom: 20px;
+}
+
+.rank-btn{
+  margin-right: 8px;
+}
+
+#rankingContainer-10{
+  margin-bottom: 20px;
+}
+
+#result-box{
+  display: block; 
+  margin-bottom: 7px; 
+  color: #0066FF; 
+}
+
 @media screen and (min-width: 768px){
-  /* .container{
-    padding: 0 100px;
-  } */
-  
   .list-container{
     text-align: center;
   }
