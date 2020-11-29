@@ -84,9 +84,6 @@ body {
   margin-right: 8px;
 }
 
-#rankingContainer-10{
-  margin-bottom: 20px;
-}
 
 #result-box{
   display: block; 
@@ -94,13 +91,50 @@ body {
   color: #0066FF; 
 }
 
-@media screen and (min-width: 768px){
-  .list-container{
-    text-align: center;
+.list-container{
+  text-align: center;
+}
+
+.list-container img{
+  display: inline-block; 
+  margin-bottom: 4px;
+}
+ 
+table, th, td {
+  border: 1px solid #0066FF;
+}
+
+.table-number{
+  text-align: center;
+}
+
+@media screen and (max-width: 768px){
+
+  .input-group {
+    width:auto;
+    display:grid;
+    grid-template-columns: 35% 60% 5%;
   }
 
-  .list-container img{
-    margin: 5px 4px;
+  #show-page{
+    width: 120px;
+  }
+
+  .user-image-container img{
+    width: 100%;
+  }
+
+  .comment-show{
+    width: auto;
+  }
+  
+  .commentform{
+    width: 100%;
+    padding:5px;
+  }
+
+  .user-form{
+    width:auto;
   }
 
 }
