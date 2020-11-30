@@ -65,10 +65,10 @@ body {
   z-index: -1;
 }
 
-/* #face-image{
-  display: none; 
-  z-index: -1;
-}   */
+#face-image{
+  max-width: 300px; 
+  max-height: 200px;
+}
 
 .container > img{
   display: block; 
@@ -172,14 +172,28 @@ table, th, td {
 
 
 @media screen and (max-width: 991px){
+  .back-btn{
+    margin-bottom: 10px;
+  }
+
   table{
     margin-bottom: 10px;
   }
 }
 
 @media screen and (min-width: 991px){
+  .container{
+    position: relative; 
+  }
+
   .container > img{
     margin-right: 30px;
+  }
+
+  .back-btn{
+    position: absolute; 
+    top: 260px;
+    left: 16px;
   }
 
   .container > img, 
