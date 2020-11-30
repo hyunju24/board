@@ -2,6 +2,8 @@ var express  = require('express');
 var router = express.Router();
 var Post = require('../models/Post');
 var User = require('../models/User');
+var Comment = require('../models/Comment');
+var File = require('../models/File'); // 3
 var util = require('../util');
 
 router.get('/', async function(req, res){
@@ -35,11 +37,30 @@ router.get('/', async function(req, res){
         } },
       ]).exec();
     }
-    res.render('search', {
+    res.render('search/bar', {
         posts:posts,
         searchType:req.query.searchType, // 2
         searchText:req.query.searchText  // 2
         });
+});
+
+router.get('/:id', function(req, res){
+  var commentForm = req.flash('commentForm')[0] || {_id: null, form: {}};
+  var commentError = req.flash('commentError')[0] || { _id:null, parentComment: null, errors:{}};
+
+  Promise.all([
+    Post.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' }).populate({path:'attachment',match:{isDeleted:false}}), 
+    Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
+    ])
+    .then(([post, comments]) => {
+      post.views++; // 2
+      post.save();  // 2
+      res.render('search/show', { post:post, comments:comments, commentForm:commentForm, commentError:commentError});
+    })
+    .catch((err) => {
+      console.log('err: ', err);
+      return res.json(err);
+    });
 });
 
 async function createSearchQuery(queries){ // 4

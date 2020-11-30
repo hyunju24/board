@@ -11,6 +11,7 @@
     <h2 class="mb-3"><%=lists.zzal%>짤</h2>
 
     <img src="../../../../<%=lists.img%>" width="300" height="200"></img>
+    <button type="button" class="btn btn-primary" onclick="location.href='/lists';">Back</button>
 
     
 
@@ -244,6 +245,7 @@
           var psrate=<%=lists.pose_rate%>;
           //result가 최종 결과값
           var result = (faceresult*fcrate + poseresult*psrate) * 100;
+          result = result.toFixed(3);
           document.getElementById('userresults').value = result;
           document.getElementById('result-box').innerHTML = "싱크로율 => " + result; 
           console.log(result);

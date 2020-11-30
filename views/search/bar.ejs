@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%- include('partials/head') %>
+    <%- include('../partials/head') %>
   </head>
   <body>
-    <%- include('partials/nav') %>
+    <%- include('../partials/nav') %>
 
     <div class="container mb-3">
 
@@ -30,7 +30,7 @@
           <% posts.forEach(function(post) { %>
             <tr>
               <td>
-                <a href="/posts/<%= post._id %><%= getPostQueryString() %>">
+                <a href="/search/<%= post._id %><%= getPostQueryString() %>">
                 <!-- 1 --> <div data-search-highlight="title" class="ellipsis"><%= post.title %></div> 
                 </a>
               </td>
