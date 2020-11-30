@@ -12,31 +12,63 @@
 
     <img src="../../../../<%=lists.img%>" width="300" height="200"></img>
 
-    <br>
-    <br>
-    <button type="button" class="btn btn-primary" onclick="rank();">랭킹확인</button>
-    <br>
-    <br>
-
-    <div id="rankingContainer-1"></div>
-    <div id="rankingContainer-2"></div>
-    <div id="rankingContainer-3"></div>
-    <div id="rankingContainer-4"></div>
-    <div id="rankingContainer-5"></div>
-    <div id="rankingContainer-6"></div>
-    <div id="rankingContainer-7"></div>
-    <div id="rankingContainer-8"></div>
-    <div id="rankingContainer-9"></div>
-    <div id="rankingContainer-10"></div>
-
-    <br>
-    <br>
-
+    
 
     <!-- <div>Teachable Machine Pose Model</div> -->
     <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <div class="file-upload">
-      <button class="file-upload-btn btn btn-primary" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button> 
+      <div class="btn-box">
+        <button type="button" class="btn btn-primary rank-btn" onclick="rank();">랭킹확인</button>
+        <button class="file-upload-btn btn btn-primary" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button>
+           
+      </div> 
+
+      <table>
+        <th>랭킹</th>
+        <th>싱크로율</th>
+        <tr>
+          <td class="table-number">1</td>
+          <td><div id="rankingContainer-1"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">2</td>
+          <td><div id="rankingContainer-2"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">3</td>
+          <td><div id="rankingContainer-3"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">4</td>
+          <td><div id="rankingContainer-4"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">5</td>
+          <td><div id="rankingContainer-5"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">6</td>
+          <td><div id="rankingContainer-6"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">7</td>
+          <td><div id="rankingContainer-7"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">8</td>
+          <td><div id="rankingContainer-8"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">9</td>
+          <td><div id="rankingContainer-9"></div></td>
+        </tr>
+        <tr>
+          <td class="table-number">10</td>
+          <td><div id="rankingContainer-10"></div></td>
+        </tr>
+      </table>
+      
+     
 
       <div class="image-upload-wrap">
         <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
@@ -52,7 +84,18 @@
         </div> -->
       </div>
     </div>
-    <div><canvas id="canvas"></canvas></div>
+    <div>
+      <strong id="result-box"></strong>
+      <form action="/lists/<%= lists.name %>?_method=put" method="post" name="send_result">
+        <div class="form-group row">
+          <div class="col-sm-9 col-sm-offset-3">
+            <input type="number" step="any" id="userresults" name="userresults" value=0 >
+            <button type="submit" class="btn btn-primary">랭킹등록</button>
+          </div>
+        </div>
+      </form> 
+      <canvas id="canvas"></canvas>
+    </div>
     <div id="label-container"></div>
     <div id="label-container2"></div>
 
@@ -200,6 +243,7 @@
           //result가 최종 결과값
           var result = (faceresult*fcrate + poseresult*psrate) * 100;
           document.getElementById('userresults').value = result;
+          document.getElementById('result-box').innerHTML = "싱크로율 => " + result; 
           console.log(result);
           // console.log(typeof result); 
         }
@@ -231,43 +275,43 @@
 
           const rankingContainer1 = document.getElementById("rankingContainer-1"); 
           rankingContainer1.appendChild(document.createElement("div"));
-          rankingContainer1.innerHTML = 1 + " : " + ranking[0] + "<br>"; 
+          rankingContainer1.innerHTML = ranking[0]; 
 
           const rankingContainer2 = document.getElementById("rankingContainer-2");
           rankingContainer2.appendChild(document.createElement("div"));
-          rankingContainer2.innerHTML = 2 + " : " + ranking[1] + "<br>"; 
+          rankingContainer2.innerHTML = ranking[1]; 
 
           const rankingContainer3 = document.getElementById("rankingContainer-3");
           rankingContainer3.appendChild(document.createElement("div"));
-          rankingContainer3.innerHTML = 3 + " : " + ranking[2] + "<br>"; 
+          rankingContainer3.innerHTML = ranking[2]; 
 
           const rankingContainer4 = document.getElementById("rankingContainer-4");
           rankingContainer4.appendChild(document.createElement("div"));
-          rankingContainer4.innerHTML = 4 + " : " + ranking[3] + "<br>"; 
+          rankingContainer4.innerHTML = ranking[3]; 
 
           const rankingContainer5 = document.getElementById("rankingContainer-5");
           rankingContainer5.appendChild(document.createElement("div"));
-          rankingContainer5.innerHTML = 5 + " : " + ranking[4] + "<br>"; 
+          rankingContainer5.innerHTML = ranking[4]; 
 
           const rankingContainer6 = document.getElementById("rankingContainer-6");
           rankingContainer6.appendChild(document.createElement("div"));
-          rankingContainer6.innerHTML = 6 + " : " + ranking[5] + "<br>"; 
+          rankingContainer6.innerHTML = ranking[5]; 
 
           const rankingContainer7 = document.getElementById("rankingContainer-7");
           rankingContainer7.appendChild(document.createElement("div"));
-          rankingContainer7.innerHTML = 7 + " : " + ranking[6] + "<br>"; 
+          rankingContainer7.innerHTML = ranking[6]; 
 
           const rankingContainer8 = document.getElementById("rankingContainer-8");
           rankingContainer8.appendChild(document.createElement("div"));
-          rankingContainer8.innerHTML = 8 + " : " + ranking[7] + "<br>"; 
+          rankingContainer8.innerHTML = ranking[7]; 
 
           const rankingContainer9 = document.getElementById("rankingContainer-9");
           rankingContainer9.appendChild(document.createElement("div"));
-          rankingContainer9.innerHTML = 9 + " : " + ranking[8] + "<br>"; 
+          rankingContainer9.innerHTML = ranking[8]; 
 
           const rankingContainer10 = document.getElementById("rankingContainer-10");
           rankingContainer10.appendChild(document.createElement("div"));
-          rankingContainer10.innerHTML = 10 + " : " + ranking[9] + "<br>"; 
+          rankingContainer10.innerHTML = ranking[9]; 
 
           
         }
@@ -275,14 +319,6 @@
         
 
     </script>
-    <form action="/lists/<%= lists.name %>?_method=put" method="post" name="send_result">
-      <div class="form-group row">
-        <div class="col-sm-9 col-sm-offset-3">
-          <input type="number" step="any" id="userresults" name="userresults" value=0 >
-          <button type="submit" class="btn btn-primary">랭킹등록</button>
-        </div>
-      </div>
-    </form>
     
     
 
