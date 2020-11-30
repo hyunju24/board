@@ -65,10 +65,10 @@ body {
   z-index: -1;
 }
 
-#face-image{
+/* #face-image{
   display: none; 
   z-index: -1;
-}
+}   */
 
 .container > img{
   display: block; 
@@ -109,6 +109,11 @@ table, th, td {
 }
 
 @media screen and (max-width: 768px){
+  /* .container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  } */
 
   .input-group {
     width:auto;
@@ -137,4 +142,61 @@ table, th, td {
     width:auto;
   }
 
+  table{
+    margin-bottom: 10px;
+  }
+
+  #face-image{
+    margin-bottom: 10px;
+  }
+
+}
+
+@media screen and (min-width: 768px){
+  .login-container{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mt-3{
+    position: relative; 
+  }
+
+  .mt-3 > input{
+    position: absolute;
+    right: 0;
+  }
+}
+
+
+@media screen and (max-width: 991px){
+  table{
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (min-width: 991px){
+  .container > img{
+    margin-right: 30px;
+  }
+
+  .container > img, 
+  .file-upload{
+    float: left; 
+  }
+
+  .file-upload{
+    position: relative; 
+  }
+
+  .file-upload-btn{
+    margin-right: 20px;
+  }
+
+  .file-upload-content{
+    position: absolute;
+    top: 80px; 
+    right: -280px;
+  }
 }
