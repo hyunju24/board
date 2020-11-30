@@ -50,7 +50,7 @@ app.use('/search', util.getPostQueryString, require('./routes/search'));
 app.use('/posts', util.getPostQueryString, require('./routes/posts'));
 app.use('/users', require('./routes/users'));
 app.use('/comments', util.getPostQueryString, require('./routes/comments'));
-
+app.use('/comments2', util.getPostQueryString, require('./routes/comments2'));
 // Port setting
 var port = 3000;
 app.listen(port, function(){
