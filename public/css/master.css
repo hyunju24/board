@@ -108,6 +108,15 @@ table, th, td {
   text-align: center;
 }
 
+.mt-3{
+  position: relative; 
+}
+
+.mt-3 > input{
+  position: absolute;
+  right: 0;
+}
+
 @media screen and (max-width: 768px){
   /* .container{
     display: flex;
@@ -159,14 +168,6 @@ table, th, td {
     align-items: center;
   }
 
-  .mt-3{
-    position: relative; 
-  }
-
-  .mt-3 > input{
-    position: absolute;
-    right: 0;
-  }
 }
 
 
