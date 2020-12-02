@@ -52,7 +52,5 @@ app.use('/users', require('./routes/users'));
 app.use('/comments', util.getPostQueryString, require('./routes/comments'));
 app.use('/comments2', util.getPostQueryString, require('./routes/comments2'));
 // Port setting
-var port = 3000;
-app.listen(port, function(){
-  console.log('server on! http://localhost:'+port);
-});
+
+app.listen(process.env.PORT || 3000)
