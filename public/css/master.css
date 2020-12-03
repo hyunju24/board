@@ -118,11 +118,14 @@ table, th, td {
 }
 
 .footer-notice{
+  width: 100%; 
+  padding: 5px; 
   position: fixed; 
   bottom: 0; 
   left: 0; 
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.5); 
+  font-size: 13px;
+  text-align: center;
+  color: cornsilk; 
   background-color: #F8F9FA; 
 }
 
