@@ -125,8 +125,8 @@ table, th, td {
   left: 0; 
   font-size: 13px;
   text-align: center;
-  color: cornsilk; 
-  background-color: #F8F9FA; 
+  color: #0066FF; 
+  background-color: cornsilk; 
 }
 
 @media screen and (max-width: 768px){
