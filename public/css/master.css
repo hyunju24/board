@@ -117,6 +117,15 @@ table, th, td {
   right: 0;
 }
 
+.footer-notice{
+  position: fixed; 
+  bottom: 0; 
+  left: 0; 
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5); 
+  background-color: #F8F9FA; 
+}
+
 @media screen and (max-width: 768px){
   /* .container{
     display: flex;
