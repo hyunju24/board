@@ -2,6 +2,7 @@ var express  = require('express');
 var router = express.Router();
 var multer = require('multer'); // 1
 var upload = multer({ dest: 'public/uploadedFiles/' });
+var User = require('../models/User');
 var Post = require('../models/Post');
 var Comment = require('../models/Comment');
 var File = require('../models/File'); // 3
