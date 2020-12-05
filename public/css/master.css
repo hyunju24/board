@@ -108,6 +108,10 @@ table, th, td {
   text-align: center;
 }
 
+.user-image-container img{
+  width: 100%;
+}
+
 .mt-3{
   position: relative; 
 }
@@ -144,10 +148,6 @@ table, th, td {
 
   #show-page{
     width: 120px;
-  }
-
-  .user-image-container img{
-    width: 100%;
   }
 
   .comment-show{
